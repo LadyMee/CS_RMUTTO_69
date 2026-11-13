@@ -1,0 +1,2855 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>วิทยาการคอมพิวเตอร์ มทร.ตะวันออก (บางพระ) | CS RMUTTO 2569</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
+
+  <!-- Google Fonts: Prompt & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Prompt', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              800: '#0c4a6e',
+              900: '#082f49',
+              accent: '#06b6d4',
+              neon: '#38bdf8',
+            }
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      font-family: 'Prompt', sans-serif;
+    }
+    .code-font {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .gradient-bg {
+      background: radial-gradient(circle at 15% 20%, rgba(14, 165, 233, 0.15) 0%, transparent 40%),
+                  radial-gradient(circle at 85% 75%, rgba(59, 130, 246, 0.12) 0%, transparent 40%),
+                  #070d19;
+    }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card-hover {
+      transition: all 0.3s ease;
+    }
+    .glass-card-hover:hover {
+      background: rgba(30, 41, 59, 0.85);
+      border-color: rgba(56, 189, 248, 0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 30px -10px rgba(2, 132, 199, 0.2);
+    }
+    .glow-text {
+      text-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b1120;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #38bdf8;
+    }
+  </style>
+</head>
+<body class="bg-[#070d19] text-slate-200 antialiased selection:bg-cyan-500 selection:text-slate-950">
+
+  <!-- ================= TOP TICKER / ANNOUNCEMENT ================= -->
+  <div class="bg-gradient-to-r from-blue-700 via-sky-600 to-cyan-500 text-white text-xs sm:text-sm py-2 px-4 text-center font-medium shadow-md">
+    <div class="max-w-7xl mx-auto flex items-center justify-center gap-2 flex-wrap">
+      <span class="bg-white/20 px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider">TCAS / รับตรง</span>
+      <span>เปิดรับสมัครนักศึกษาใหม่ • วท.บ. วิทยาการคอมพิวเตอร์ (ม.6 ทุกแผนการเรียน / ปวช. / ปวส. เทียบโอน)</span>
+      <a href="https://academic.rmutto.ac.th/?page_id=706" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 underline hover:text-cyan-200 ml-1 font-bold">
+        <span>สมัครเข้าศึกษาออนไลน์ที่นี่</span>
+        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="sticky top-0 z-50 bg-[#070d19]/90 backdrop-blur-xl border-b border-slate-800 transition-all duration-300">
+    <div class="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 sm:gap-3.5 group shrink-0 mr-4 lg:mr-8 xl:mr-10">
+        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-slate-950 font-black shadow-lg shadow-cyan-500/25 group-hover:scale-105 transition-transform shrink-0">
+          <i data-lucide="terminal" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
+        </div>
+        <div class="shrink-0">
+          <div class="flex items-center gap-2">
+            <span class="text-lg sm:text-xl font-extrabold text-white tracking-wide whitespace-nowrap">CS • RMUTTO</span>
+            <span class="text-[10px] code-font px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 whitespace-nowrap shrink-0 inline-flex items-center">หลักสูตร 2569</span>
+          </div>
+          <p class="text-[11px] sm:text-xs text-slate-400 -mt-0.5 whitespace-nowrap">วิทยาการคอมพิวเตอร์ มทร.ตะวันออก (บางพระ)</p>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex items-center gap-2 xl:gap-4 2xl:gap-6 font-medium text-xs xl:text-sm text-slate-300">
+        <a href="#about" class="whitespace-nowrap shrink-0 hover:text-cyan-400 transition-colors py-1">ทำไมต้อง CS บางพระ</a>
+        <a href="#curriculum" class="whitespace-nowrap shrink-0 hover:text-cyan-400 transition-colors py-1">แผนการเรียน 4 ปี</a>
+        <a href="#plos" class="whitespace-nowrap shrink-0 hover:text-cyan-400 transition-colors py-1 text-cyan-300 font-semibold px-1.5 py-0.5 rounded hover:bg-cyan-950/40 border border-cyan-500/20">ผลลัพธ์การเรียนรู้ (PLOs)</a>
+        <a href="#careers" class="whitespace-nowrap shrink-0 hover:text-cyan-400 transition-colors py-1">เส้นทางอาชีพ</a>
+        <a href="#admission" class="whitespace-nowrap shrink-0 hover:text-cyan-400 transition-colors py-1">คุณสมบัติผู้สมัคร</a>
+        <a href="#calendar" class="whitespace-nowrap shrink-0 hover:text-amber-300 transition-colors text-amber-300 font-bold flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20">
+          <i data-lucide="calendar" class="w-3.5 h-3.5 xl:w-4 xl:h-4 text-amber-400 shrink-0"></i>
+          <span>ปฏิทินรับสมัคร</span>
+        </a>
+        <a href="#contact" class="whitespace-nowrap shrink-0 hover:text-cyan-400 transition-colors py-1">ติดต่อเรา</a>
+      </nav>
+
+      <!-- CTA -->
+      <div class="hidden sm:flex items-center gap-2 xl:gap-3 shrink-0 ml-3 lg:ml-4 xl:ml-6">
+        <a href="slides.html" target="_blank" class="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-cyan-300 bg-cyan-950/60 border border-cyan-800/60 hover:bg-cyan-900/60 transition text-xs font-semibold shrink-0" title="เปิดดูสไลด์นำเสนอ 16:9 สำหรับพรีเซนต์">
+          <i data-lucide="presentation" class="w-4 h-4 text-cyan-400"></i>
+          <span>สไลด์นำเสนอ</span>
+        </a>
+        <a href="CS_RMUTTO_Curriculum_2569.pptx" download class="hidden xl:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-amber-300 bg-amber-950/40 border border-amber-800/60 hover:bg-amber-900/40 transition text-xs font-semibold shrink-0" title="ดาวน์โหลดไฟล์ PowerPoint (.pptx)">
+          <i data-lucide="file-down" class="w-4 h-4 text-amber-400"></i>
+          <span>โหลด PPTX</span>
+        </a>
+        <a href="https://www.facebook.com/ComSciBPRMUTTO/" target="_blank" rel="noopener noreferrer" class="p-2 rounded-xl text-slate-400 hover:text-cyan-400 hover:bg-slate-800 transition shrink-0" title="Facebook สาขาวิชา">
+          <i data-lucide="facebook" class="w-5 h-5"></i>
+        </a>
+        <a href="https://academic.rmutto.ac.th/?page_id=706" target="_blank" rel="noopener noreferrer" class="whitespace-nowrap inline-flex items-center gap-1.5 xl:gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold px-3.5 xl:px-5 py-2 xl:py-2.5 rounded-xl shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/35 transition-all transform hover:-translate-y-0.5 text-xs xl:text-sm shrink-0">
+          <span>สมัครเข้าศึกษา</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5 xl:w-4 xl:h-4 shrink-0"></i>
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800" aria-label="เปิดเมนู">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-slate-900 border-b border-slate-800 px-6 py-5 space-y-3">
+      <a href="#about" class="block py-2 text-slate-300 hover:text-cyan-400 font-medium">ทำไมต้อง CS บางพระ</a>
+      <a href="#curriculum" class="block py-2 text-slate-300 hover:text-cyan-400 font-medium">แผนการเรียน 4 ปี</a>
+      <a href="#plos" class="block py-2 text-cyan-300 hover:text-cyan-400 font-semibold flex items-center gap-2">
+        <span>ผลลัพธ์การเรียนรู้ (PLOs)</span>
+        <span class="text-[10px] code-font px-1.5 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">ใหม่</span>
+      </a>
+      <a href="#careers" class="block py-2 text-slate-300 hover:text-cyan-400 font-medium">เส้นทางอาชีพ</a>
+      <a href="#admission" class="block py-2 text-slate-300 hover:text-cyan-400 font-medium">คุณสมบัติผู้สมัคร</a>
+      <a href="#calendar" class="block py-2 text-amber-300 hover:text-amber-400 font-bold flex items-center gap-2">
+        <i data-lucide="calendar" class="w-4 h-4 text-amber-400"></i>
+        <span>ปฏิทินรับสมัคร TCAS 70</span>
+      </a>
+      <a href="#contact" class="block py-2 text-slate-300 hover:text-cyan-400 font-medium">ติดต่อเรา</a>
+      <a href="slides.html" target="_blank" class="block py-2 text-cyan-300 hover:text-cyan-200 font-semibold flex items-center gap-2">
+        <i data-lucide="presentation" class="w-4 h-4 text-cyan-400"></i>
+        <span>เปิดดูสไลด์นำเสนอ 16:9 (Slide Deck)</span>
+      </a>
+      <div class="pt-3 border-t border-slate-800 flex items-center justify-between">
+        <a href="https://www.facebook.com/ComSciBPRMUTTO/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-slate-400 hover:text-cyan-400">
+          <i data-lucide="facebook" class="w-4 h-4 text-cyan-400"></i>
+          <span>Facebook สาขา</span>
+        </a>
+        <a href="https://academic.rmutto.ac.th/?page_id=706" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-400">
+          <span>สมัครเข้าศึกษา</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="gradient-bg pt-20 pb-24 lg:pt-28 lg:pb-36 relative overflow-hidden">
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Column: Hero Text -->
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          
+          <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-800/80 border border-slate-700/80 text-cyan-300 text-xs sm:text-sm font-medium backdrop-blur-sm">
+            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+            <span>หลักสูตรปรับปรุงใหม่ล่าสุด พ.ศ. 2569 (วท.บ. วิทยาการคอมพิวเตอร์)</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15]">
+            Code Your Future <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500 glow-text">
+              สร้างอนาคตสายเทคกับ CS บางพระ
+            </span>
+          </h1>
+
+          <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
+            เรียนรู้การเป็น <strong class="text-white font-semibold">Software Developer, AI Engineer, Data Analyst, และ Cloud Security</strong> 
+            ผ่านการลงมือปฏิบัติจริง พร้อมสหกิจศึกษาในองค์กรชั้นนำ ตอบโจทย์อุตสาหกรรมดิจิทัลแห่งอนาคตและพื้นที่ EEC
+          </p>
+
+          <!-- Key Highlights Chips -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-left">
+            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+              <div class="text-cyan-400 font-extrabold text-xl code-font">120+</div>
+              <div class="text-xs text-slate-400">หน่วยกิตตลอดหลักสูตร</div>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+              <div class="text-emerald-400 font-extrabold text-xl code-font">ม.6 / ปวช.</div>
+              <div class="text-xs text-slate-400">รับทุกแผนการเรียน / เทียบโอน</div>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 col-span-2 sm:col-span-1">
+              <div class="text-amber-400 font-extrabold text-xl code-font">EEC Area</div>
+              <div class="text-xs text-slate-400">ใกล้แหล่งงาน & บรรยากาศติดทะเล</div>
+            </div>
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+            <a href="https://academic.rmutto.ac.th/?page_id=706" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-400 to-blue-600 hover:from-cyan-300 hover:to-blue-500 text-slate-950 font-bold px-7 py-3.5 rounded-xl shadow-xl shadow-cyan-500/20 transition-all transform hover:-translate-y-0.5">
+              <span>สมัครเข้าศึกษาออนไลน์</span>
+              <i data-lucide="external-link" class="w-4 h-4"></i>
+            </a>
+            <a href="#calendar" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 glass-card hover:bg-slate-800 text-amber-300 font-medium px-7 py-3.5 rounded-xl border border-slate-700 transition-all">
+              <i data-lucide="calendar" class="w-4 h-4 text-amber-400"></i>
+              <span>ดูปฏิทินรับสมัคร ปี 2570 (TCAS 70)</span>
+            </a>
+            <a href="#curriculum" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 glass-card hover:bg-slate-800 text-white font-medium px-7 py-3.5 rounded-xl border border-slate-700 transition-all">
+              <i data-lucide="book-open" class="w-4 h-4 text-cyan-400"></i>
+              <span>แผนการเรียน 4 ปี</span>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Interactive Tech Code Showcase Mockup -->
+        <div class="lg:col-span-5">
+          <div class="relative mx-auto max-w-lg glass-card rounded-2xl border border-slate-700/60 shadow-2xl overflow-hidden animate-float">
+            
+            <!-- Window Titlebar -->
+            <div class="bg-slate-900/90 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
+                <span class="w-3 h-3 rounded-full bg-amber-500/80"></span>
+                <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+              </div>
+              <div class="code-font text-xs text-slate-400 flex items-center gap-1.5">
+                <i data-lucide="code" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span>cs_student.py — Bangpra</span>
+              </div>
+              <span class="text-[10px] code-font text-slate-500">Python 3.12</span>
+            </div>
+
+            <!-- Code Content -->
+            <div class="p-5 code-font text-xs sm:text-sm text-slate-300 leading-relaxed overflow-x-auto space-y-2 bg-[#050b14]/90">
+              <p><span class="text-purple-400">class</span> <span class="text-yellow-300">CSBangpraStudent</span>:</p>
+              <p class="pl-4 text-slate-400"># หลักสูตร วท.บ. วิทยาการคอมพิวเตอร์ 2569</p>
+              <p class="pl-4"><span class="text-sky-400">def</span> <span class="text-blue-400">__init__</span>(self, name):</p>
+              <p class="pl-8">self.name = name</p>
+              <p class="pl-8">self.degree = <span class="text-emerald-400">"B.S. in Computer Science"</span></p>
+              <p class="pl-8">self.campus = <span class="text-emerald-400">"RMUTTO (Bangpra, Chonburi)"</span></p>
+              <p class="pl-8">self.skills = [</p>
+              <p class="pl-12 text-cyan-300">"Full-Stack Web & Mobile",</p>
+              <p class="pl-12 text-cyan-300">"AI & Data Analytics",</p>
+              <p class="pl-12 text-cyan-300">"IoT & Embedded Systems",</p>
+              <p class="pl-12 text-cyan-300">"Cybersecurity"</p>
+              <p class="pl-8">]</p>
+              
+              <p class="pl-4"><span class="text-sky-400">def</span> <span class="text-blue-400">graduate</span>(self):</p>
+              <p class="pl-8 text-amber-300"><span class="text-purple-400">return</span> <span class="text-emerald-400">"Ready for High-Paying Tech Jobs 🚀"</span></p>
+              
+              <div class="pt-3 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-center justify-between">
+                <span class="text-emerald-400">● Status: Open for Admission</span>
+                <span>Location: ชลบุรี ติดทะเล-ภูเขา</span>
+              </div>
+            </div>
+
+            <!-- Bottom Highlights Banner -->
+            <div class="p-4 bg-slate-900/60 border-t border-slate-800 flex items-center justify-between text-xs">
+              <span class="text-slate-400">คณะวิทยาศาสตร์และเทคโนโลยี</span>
+              <span class="text-cyan-400 font-semibold flex items-center gap-1">
+                <i data-lucide="check-check" class="w-4 h-4"></i>
+                รับรองโดยกระทรวง อว.
+              </span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= ABOUT & PHILOSOPHY / ข้อมูลทั่วไป ================= -->
+  <section id="about" class="py-20 bg-slate-950 border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-3 mb-16">
+        <span class="text-xs font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-800/60 px-3.5 py-1 rounded-full">
+          Why CS Bangpra?
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">ทำไมวิทยาการคอมพิวเตอร์ บางพระ ถึงน่าเรียน?</h2>
+        <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+          มหาวิทยาลัยเทคโนโลยีราชมงคลตะวันออก เขตพื้นที่บางพระ มุ่งเน้นสร้างบัณฑิตนักปฏิบัติ “รอบรู้วิชาการ เชี่ยวชาญวิชาชีพ สร้างเทคโนโลยีและนวัตกรรม”
+        </p>
+      </div>
+
+      <!-- 4 Pillars -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <div class="glass-card glass-card-hover p-6 rounded-2xl">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-cyan-400 border border-blue-500/20 flex items-center justify-center mb-5">
+            <i data-lucide="cpu" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">เน้นลงมือปฏิบัติจริง</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            ห้องปฏิบัติการคอมพิวเตอร์ที่ทันสมัย ได้เขียนโค้ดจริง ทำโปรเจกต์จริงตั้งแต่ปี 1 ไม่ใช่แค่เรียนทฤษฎีในห้อง
+          </p>
+        </div>
+
+        <div class="glass-card glass-card-hover p-6 rounded-2xl">
+          <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 flex items-center justify-center mb-5">
+            <i data-lucide="bot" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">อัปเดตเทรนด์ AI & Cloud</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            หลักสูตร พ.ศ. 2569 บรรจุรายวิชา AI, Data Analytics, Cybersecurity, IoT และ Full-stack Application ครบครัน
+          </p>
+        </div>
+
+        <div class="glass-card glass-card-hover p-6 rounded-2xl">
+          <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20 flex items-center justify-center mb-5">
+            <i data-lucide="briefcase" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">สหกิจศึกษาในสถานประกอบการ</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            ปี 4 ได้ฝึกปฏิบัติงานจริงในบริษัทชั้นนำ พร้อมโอกาสได้รับการบรรจุเป็นพนักงานทันทีก่อนจบการศึกษา
+          </p>
+        </div>
+
+        <div class="glass-card glass-card-hover p-6 rounded-2xl">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center mb-5">
+            <i data-lucide="map-pin" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">ทำเลทอง EEC & บรรยากาศดี</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            ตั้งอยู่ในเขตเศรษฐกิจพิเศษภาคตะวันออก (EEC) แหล่งงานด้านดิจิทัลมากมาย ใกล้ชายหาดบางพระและธรรมชาติ
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Philosophy & Degree Info Banner -->
+      <div class="mt-12 glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400 block mb-1">ข้อมูลหลักสูตร</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-white">หลักสูตรวิทยาศาสตรบัณฑิต (วิทยาการคอมพิวเตอร์)</h3>
+          <p class="text-xs code-font text-slate-400 mt-1 mb-4">รหัสหลักสูตร: 25441931100328 • วท.บ. (วิทยาการคอมพิวเตอร์) / B.S. (Computer Science)</p>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            มุ่งผลิตบัณฑิตที่มีความพร้อมในการปฏิบัติงาน เชี่ยวชาญด้านคอมพิวเตอร์ตามมาตรฐานคุณวุฒิ มีคุณธรรม จริยธรรม และความรับผิดชอบ พร้อมทักษะการทำงานร่วมกับผู้อื่นอย่างมืออาชีพ
+          </p>
+        </div>
+
+        <div class="space-y-3 bg-slate-900/80 p-5 rounded-xl border border-slate-800 text-sm">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <span class="text-slate-400">หน่วยกิตรวมตลอดหลักสูตร:</span>
+            <span class="font-bold text-cyan-400 code-font">ไม่น้อยกว่า 120 หน่วยกิต</span>
+          </div>
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <span class="text-slate-400">ระยะเวลาศึกษา:</span>
+            <span class="font-bold text-white">4 ปี (หรือเทียบโอน 2-3 ปี)</span>
+          </div>
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <span class="text-slate-400">สังกัด:</span>
+            <span class="font-bold text-white">คณะวิทยาศาสตร์และเทคโนโลยี</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400">วิทยาเขต:</span>
+            <span class="font-bold text-cyan-400">เขตพื้นที่บางพระ จ.ชลบุรี</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 4-YEAR CURRICULUM ROADMAP (แผนการเรียน 4 ปี) ================= -->
+  <section id="curriculum" class="py-20 bg-[#09101f] border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-3 mb-12">
+        <span class="text-xs font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-800/60 px-3.5 py-1 rounded-full">
+          Study Plan Roadmap
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">แผนการเรียนตลอด 4 ปี (พ.ศ. 2569)</h2>
+        <p class="text-slate-400 text-sm sm:text-base">
+          ออกแบบตามลำดับการเรียนรู้ จากพื้นฐานการเขียนโค้ด สู่การพัฒนาระบบขั้นสูง และการทำงานจริงในสถานประกอบการ
+        </p>
+      </div>
+
+      <!-- Year Selector Tabs -->
+      <div class="flex items-center justify-center gap-2 sm:gap-4 mb-10 overflow-x-auto pb-2">
+        <button onclick="switchYear(1)" id="tab-btn-1" class="tab-btn active px-5 py-3 rounded-xl font-bold text-sm sm:text-base transition-all flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 shadow-lg shadow-cyan-500/25">
+          <i data-lucide="layers" class="w-4 h-4"></i>
+          <span>ปีที่ 1 : ก้าวแรกสู่วงการโปรแกรมเมอร์</span>
+        </button>
+        <button onclick="switchYear(2)" id="tab-btn-2" class="tab-btn px-5 py-3 rounded-xl font-bold text-sm sm:text-base transition-all flex items-center gap-2 bg-slate-900 text-slate-400 hover:text-white border border-slate-800">
+          <i data-lucide="smartphone" class="w-4 h-4"></i>
+          <span>ปีที่ 2 : AI, IoT & Mobile</span>
+        </button>
+        <button onclick="switchYear(3)" id="tab-btn-3" class="tab-btn px-5 py-3 rounded-xl font-bold text-sm sm:text-base transition-all flex items-center gap-2 bg-slate-900 text-slate-400 hover:text-white border border-slate-800">
+          <i data-lucide="shield-check" class="w-4 h-4"></i>
+          <span>ปีที่ 3 : Security, Web & Software</span>
+        </button>
+        <button onclick="switchYear(4)" id="tab-btn-4" class="tab-btn px-5 py-3 rounded-xl font-bold text-sm sm:text-base transition-all flex items-center gap-2 bg-slate-900 text-slate-400 hover:text-white border border-slate-800">
+          <i data-lucide="award" class="w-4 h-4"></i>
+          <span>ปีที่ 4 : สหกิจศึกษา & ทำงานจริง</span>
+        </button>
+      </div>
+
+      <!-- Tab Contents Container -->
+      <div id="year-content-container">
+
+        <!-- YEAR 1 -->
+        <div id="year-1-content" class="year-pane space-y-8">
+          <div class="p-6 rounded-2xl bg-gradient-to-r from-blue-950/60 to-cyan-950/40 border border-blue-800/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider">Year 1 Goal</span>
+              <h3 class="text-xl font-bold text-white mt-1">ปูพื้นฐานการเขียนโปรแกรม & วิธีคิดแบบวิทยาการคอมพิวเตอร์</h3>
+              <p class="text-sm text-slate-300 mt-1">เข้าใจโครงสร้างระบบปฏิบัติการ ฝึกทักษะการแก้ปัญหา และการสื่อสารภาษาอังกฤษ/จีน</p>
+            </div>
+            <div class="px-4 py-2 rounded-xl bg-slate-900/90 border border-slate-700 text-center shrink-0">
+              <span class="text-xs text-slate-400 block">รวมปี 1</span>
+              <span class="text-xl font-bold text-cyan-400 code-font">36 หน่วยกิต</span>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- Sem 1 -->
+            <div class="glass-card rounded-2xl p-6 border border-slate-800">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
+                <div class="flex items-center gap-2">
+                  <span class="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center font-bold text-sm code-font">1/1</span>
+                  <h4 class="font-bold text-white">ภาคการศึกษาที่ 1</h4>
+                </div>
+                <span class="text-xs code-font text-slate-400">18 หน่วยกิต</span>
+              </div>
+              <ul class="space-y-3 text-sm divide-y divide-slate-800/60">
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-13-101 (หมวดเฉพาะ)</span>
+                    <strong class="text-slate-200">การโปรแกรมคอมพิวเตอร์</strong>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-14-101 (หมวดเฉพาะ)</span>
+                    <strong class="text-slate-200">วิทยาการคอมพิวเตอร์เบื้องต้น</strong>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(3-0-6)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-01-100 (หมวดเฉพาะ)</span>
+                    <span class="text-slate-300">คณิตศาสตร์</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(3-0-6)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-slate-500 block">15-01-001 (ศึกษาทั่วไป)</span>
+                    <span class="text-slate-400">อัตลักษณ์แห่งราชมงคลตะวันออก</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(3-0-6)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-slate-500 block">15-04-016 (ศึกษาทั่วไป)</span>
+                    <span class="text-slate-400">ภาษาอังกฤษเพื่อการสื่อสาร</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-slate-500 block">15-05-024 (ศึกษาทั่วไป)</span>
+                    <span class="text-slate-400">ทักษะชีวิต</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(3-0-6)</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Sem 2 -->
+            <div class="glass-card rounded-2xl p-6 border border-slate-800">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
+                <div class="flex items-center gap-2">
+                  <span class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-sm code-font">1/2</span>
+                  <h4 class="font-bold text-white">ภาคการศึกษาที่ 2</h4>
+                </div>
+                <span class="text-xs code-font text-slate-400">18 หน่วยกิต</span>
+              </div>
+              <ul class="space-y-3 text-sm divide-y divide-slate-800/60">
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-13-103 (หมวดเฉพาะ)</span>
+                    <strong class="text-slate-200">ภาษาโปรแกรมและกรอบความคิด</strong>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-14-102 (หมวดเฉพาะ)</span>
+                    <strong class="text-slate-200">ระบบปฏิบัติการ</strong>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-01-313 (หมวดเฉพาะ)</span>
+                    <span class="text-slate-300">คณิตศาสตร์ดิสครีตและทฤษฎีการคำนวณ</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(3-0-6)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-slate-500 block">15-02-003 (ศึกษาทั่วไป)</span>
+                    <span class="text-slate-400">การคิดอย่างมีวิจารณญาณและการแก้ปัญหา</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(3-0-6)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-slate-500 block">15-03-010 (ศึกษาทั่วไป)</span>
+                    <span class="text-slate-400">การวิเคราะห์และนำเสนอข้อมูลด้วยเทคโนโลยีดิจิทัล</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-slate-500 block">15-04-017 (ศึกษาทั่วไป)</span>
+                    <span class="text-slate-400">ภาษาจีนเพื่อการสื่อสารและการเรียนรู้วัฒนธรรม</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(3-0-6)</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- YEAR 2 -->
+        <div id="year-2-content" class="year-pane hidden space-y-8">
+          <div class="p-6 rounded-2xl bg-gradient-to-r from-cyan-950/60 to-emerald-950/40 border border-cyan-800/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Year 2 Goal</span>
+              <h3 class="text-xl font-bold text-white mt-1">ก้าวสู่โลก IoT, Mobile App, ฐานข้อมูล และ AI & Data Analytics</h3>
+              <p class="text-sm text-slate-300 mt-1">สร้างระบบที่มีความซับซ้อน จัดการเครือข่ายและโครงสร้างข้อมูลอย่างมีประสิทธิภาพ</p>
+            </div>
+            <div class="px-4 py-2 rounded-xl bg-slate-900/90 border border-slate-700 text-center shrink-0">
+              <span class="text-xs text-slate-400 block">รวมปี 2</span>
+              <span class="text-xl font-bold text-emerald-400 code-font">36 หน่วยกิต</span>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- Sem 1 -->
+            <div class="glass-card rounded-2xl p-6 border border-slate-800">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
+                <div class="flex items-center gap-2">
+                  <span class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-sm code-font">2/1</span>
+                  <h4 class="font-bold text-white">ภาคการศึกษาที่ 1</h4>
+                </div>
+                <span class="text-xs code-font text-slate-400">18 หน่วยกิต</span>
+              </div>
+              <ul class="space-y-3 text-sm divide-y divide-slate-800/60">
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-12-214 (หมวดเฉพาะ)</span>
+                    <strong class="text-slate-200">ระบบฝังตัวและอินเทอร์เน็ตของสรรพสิ่ง (IoT)</strong>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-12-215 (หมวดเฉพาะ)</span>
+                    <strong class="text-slate-200">การพัฒนาโปรแกรมประยุกต์สำหรับอุปกรณ์เคลื่อนที่ (Mobile App)</strong>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-14-203 (หมวดเฉพาะ)</span>
+                    <strong class="text-slate-200">โครงสร้างข้อมูลและขั้นตอนวิธี (Data Structures & Algo)</strong>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-14-305 (หมวดเฉพาะ)</span>
+                    <span class="text-slate-300">การสื่อสารข้อมูลและเครือข่ายคอมพิวเตอร์</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-15-102 (หมวดเฉพาะ)</span>
+                    <span class="text-slate-300">โครงสร้างและสถาปัตยกรรมคอมพิวเตอร์</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-slate-500 block">15-06-027 (ศึกษาทั่วไป)</span>
+                    <span class="text-slate-400">ความเป็นพลเมืองไทยและพลเมืองโลก</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Sem 2 -->
+            <div class="glass-card rounded-2xl p-6 border border-slate-800">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
+                <div class="flex items-center gap-2">
+                  <span class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-sm code-font">2/2</span>
+                  <h4 class="font-bold text-white">ภาคการศึกษาที่ 2</h4>
+                </div>
+                <span class="text-xs code-font text-slate-400">18 หน่วยกิต</span>
+              </div>
+              <ul class="space-y-3 text-sm divide-y divide-slate-800/60">
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-12-303 (หมวดเฉพาะ)</span>
+                    <strong class="text-slate-200">ปัญญาประดิษฐ์และการวิเคราะห์ข้อมูล (AI & Data)</strong>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-12-201 (หมวดเฉพาะ)</span>
+                    <strong class="text-slate-200">ระบบฐานข้อมูลเชิงสัมพันธ์ (Database)</strong>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-01-101 (หมวดเฉพาะ)</span>
+                    <span class="text-slate-300">คณิตศาสตร์ประยุกต์ทางธุรกิจ</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(3-0-6)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-07-101 (หมวดเฉพาะ)</span>
+                    <span class="text-slate-300">หลักสถิติ</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(3-0-6)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-slate-500 block">15-03-011 (ศึกษาทั่วไป)</span>
+                    <span class="text-slate-400">ผู้ประกอบการดิจิทัล</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-purple-400 block">xx-xx-xxx (วิชาเลือกเสรี)</span>
+                    <span class="text-slate-400">วิชาเลือกเสรี</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(x-x-x)</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- YEAR 3 -->
+        <div id="year-3-content" class="year-pane hidden space-y-8">
+          <div class="p-6 rounded-2xl bg-gradient-to-r from-purple-950/60 to-indigo-950/40 border border-purple-800/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <span class="text-xs font-bold text-purple-400 uppercase tracking-wider">Year 3 Goal</span>
+              <h3 class="text-xl font-bold text-white mt-1">วิศวกรรมซอฟต์แวร์, Cybersecurity, Web App & กราฟิก</h3>
+              <p class="text-sm text-slate-300 mt-1">บูรณาการความรู้ พัฒนาแอปพลิเคชันเต็มรูปแบบ และเตรียมความพร้อมสู่การทำงานจริง</p>
+            </div>
+            <div class="px-4 py-2 rounded-xl bg-slate-900/90 border border-slate-700 text-center shrink-0">
+              <span class="text-xs text-slate-400 block">รวมปี 3</span>
+              <span class="text-xl font-bold text-purple-400 code-font">36 หน่วยกิต</span>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- Sem 1 -->
+            <div class="glass-card rounded-2xl p-6 border border-slate-800">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
+                <div class="flex items-center gap-2">
+                  <span class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold text-sm code-font">3/1</span>
+                  <h4 class="font-bold text-white">ภาคการศึกษาที่ 1</h4>
+                </div>
+                <span class="text-xs code-font text-slate-400">18 หน่วยกิต</span>
+              </div>
+              <ul class="space-y-3 text-sm divide-y divide-slate-800/60">
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-14-411 (หมวดเฉพาะ)</span>
+                    <strong class="text-slate-200">ความมั่นคงปลอดภัยทางไซเบอร์ (Cybersecurity)</strong>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-13-203 (หมวดเฉพาะ)</span>
+                    <strong class="text-slate-200">วิศวกรรมซอฟต์แวร์และการบริหารโครงการ</strong>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(3-0-6)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-12-305 (หมวดเฉพาะ)</span>
+                    <span class="text-slate-300">การวิเคราะห์และออกแบบระบบ</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-15-404 (หมวดเฉพาะ)</span>
+                    <span class="text-slate-300">ปฏิสัมพันธ์ระหว่างมนุษย์และคอมพิวเตอร์ (HCI/UX/UI)</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-1x-xxx (วิชาชีพเลือก)</span>
+                    <span class="text-slate-400">วิชาชีพเลือก 1</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(x-x-x)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-1x-xxx (วิชาชีพเลือก)</span>
+                    <span class="text-slate-400">วิชาชีพเลือก 2</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(x-x-x)</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Sem 2 -->
+            <div class="glass-card rounded-2xl p-6 border border-slate-800">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
+                <div class="flex items-center gap-2">
+                  <span class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold text-sm code-font">3/2</span>
+                  <h4 class="font-bold text-white">ภาคการศึกษาที่ 2</h4>
+                </div>
+                <span class="text-xs code-font text-slate-400">18 หน่วยกิต</span>
+              </div>
+              <ul class="space-y-3 text-sm divide-y divide-slate-800/60">
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-13-205 (หมวดเฉพาะ)</span>
+                    <strong class="text-slate-200">การพัฒนาเว็บแอปพลิเคชัน (Web Application)</strong>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-12-304 (หมวดเฉพาะ)</span>
+                    <strong class="text-slate-200">คอมพิวเตอร์กราฟิก</strong>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(2-2-5)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-10-301 (หมวดเฉพาะ)</span>
+                    <span class="text-slate-300">ภาษาอังกฤษสำหรับวิทยาการคอมพิวเตอร์</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(3-0-6)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-11-301 / 302 / 405 (หมวดเฉพาะ)</span>
+                    <span class="text-slate-300">จรรยาบรรณวิชาชีพ + เตรียมฝึกงาน + สัมมนา</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3 หน่วยกิต (1+1+1)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-cyan-400 block">06-1x-xxx (วิชาชีพเลือก)</span>
+                    <span class="text-slate-400">วิชาชีพเลือก 3</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(x-x-x)</span>
+                </li>
+                <li class="pt-2 flex justify-between items-start gap-3">
+                  <div>
+                    <span class="code-font text-xs text-purple-400 block">xx-xx-xxx (วิชาเลือกเสรี)</span>
+                    <span class="text-slate-400">วิชาเลือกเสรี</span>
+                  </div>
+                  <span class="text-xs code-font text-slate-400 shrink-0">3(x-x-x)</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- YEAR 4 -->
+        <div id="year-4-content" class="year-pane hidden space-y-8">
+          <div class="p-6 rounded-2xl bg-gradient-to-r from-amber-950/60 to-orange-950/40 border border-amber-800/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Year 4 Goal</span>
+              <h3 class="text-xl font-bold text-white mt-1">สหกิจศึกษา (Co-op Education) / ฝึกงาน & โครงงานคอมพิวเตอร์</h3>
+              <p class="text-sm text-slate-300 mt-1">ปฏิบัติงานเต็มเวลาในสถานประกอบการจริง หรือทำโครงงานนวัตกรรมพร้อมจบสู่อาชีพ</p>
+            </div>
+            <div class="px-4 py-2 rounded-xl bg-slate-900/90 border border-slate-700 text-center shrink-0">
+              <span class="text-xs text-slate-400 block">รวมปี 4</span>
+              <span class="text-xl font-bold text-amber-400 code-font">12 หน่วยกิต</span>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- Sem 1 -->
+            <div class="glass-card rounded-2xl p-6 border border-slate-800">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
+                <div class="flex items-center gap-2">
+                  <span class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-sm code-font">4/1</span>
+                  <h4 class="font-bold text-white">ภาคการศึกษาที่ 1 (6 หน่วยกิต)</h4>
+                </div>
+              </div>
+              <div class="space-y-4 text-sm">
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <span class="text-xs font-bold text-amber-400 block mb-1">ทางเลือกที่ 1 (แนะนำสำหรับสายงานตรง):</span>
+                  <div class="font-bold text-white text-base">06-11-404 สหกิจศึกษา 1</div>
+                  <p class="text-slate-400 text-xs mt-1">ปฏิบัติงานจริงในบริษัทเต็มเวลา (40 ชม./สัปดาห์) 6 หน่วยกิต</p>
+                </div>
+                <div class="text-center text-xs text-slate-500 font-bold">— หรือ —</div>
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <span class="text-xs font-bold text-slate-400 block mb-1">ทางเลือกที่ 2 (สายวิชาการ/วิจัย):</span>
+                  <div class="text-slate-200"><strong>06-11-403</strong> การฝึกงานด้านวิชาชีพคอมพิวเตอร์ (3 หน่วยกิต)</div>
+                  <div class="text-slate-200"><strong>06-13-408</strong> โครงงานคอมพิวเตอร์ (3 หน่วยกิต)</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sem 2 -->
+            <div class="glass-card rounded-2xl p-6 border border-slate-800">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
+                <div class="flex items-center gap-2">
+                  <span class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-sm code-font">4/2</span>
+                  <h4 class="font-bold text-white">ภาคการศึกษาที่ 2 (6 หน่วยกิต)</h4>
+                </div>
+              </div>
+              <div class="space-y-4 text-sm">
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <span class="text-xs font-bold text-amber-400 block mb-1">ทางเลือกที่ 1 (สหกิจศึกษาต่อเนื่อง):</span>
+                  <div class="font-bold text-white text-base">06-11-406 สหกิจศึกษา 2</div>
+                  <p class="text-slate-400 text-xs mt-1">ปฏิบัติงานจริงต่อเนื่อง เพื่อสร้างโอกาสได้รับการจ้างงานทันที 6 หน่วยกิต</p>
+                </div>
+                <div class="text-center text-xs text-slate-500 font-bold">— หรือ —</div>
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <span class="text-xs font-bold text-slate-400 block mb-1">ทางเลือกที่ 2 (เก็บวิชาชีพเลือกขั้นสูง):</span>
+                  <div class="text-slate-200"><strong>06-1x-xxx</strong> วิชาชีพเลือก 4 (3 หน่วยกิต)</div>
+                  <div class="text-slate-200 mt-2"><strong>06-1x-xxx</strong> วิชาชีพเลือก 5 (3 หน่วยกิต)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= PLOS / ผลลัพธ์การเรียนรู้ของหลักสูตร ================= -->
+  <section id="plos" class="py-20 bg-[#080e1a] border-t border-slate-800 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto space-y-3 mb-14">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-800/60">
+          <i data-lucide="award" class="w-3.5 h-3.5 text-cyan-400"></i>
+          <span class="text-xs font-bold uppercase tracking-wider text-cyan-400">
+            Program Learning Outcomes (PLOs)
+          </span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
+          ผลลัพธ์การเรียนรู้ของหลักสูตร
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+          มาตรฐานเป้าหมายการเรียนรู้ 5 ด้านหลัก (PLOs & Sub-PLOs) ที่หล่อหลอมให้บัณฑิต วท.บ. วิทยาการคอมพิวเตอร์ มทร.ตะวันออก มีความพร้อมทั้งด้านวิชาการ ทักษะปฏิบัติ จริยธรรมวิชาชีพ และการทำงานจริง
+        </p>
+      </div>
+
+      <!-- 5 PLOs Overview Cards -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
+        
+        <!-- PLO 1 Card -->
+        <div class="glass-card p-6 rounded-2xl border-t-4 border-t-blue-500 relative flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 rounded bg-blue-500/10 text-blue-400 text-xs font-bold code-font">PLOs 1</span>
+              <span class="text-[11px] text-slate-400 bg-slate-800 px-2 py-0.5 rounded">หมวดศึกษาทั่วไป</span>
+            </div>
+            <h3 class="font-bold text-white text-base mb-2">รอบรู้อย่างกว้างขวาง มีโลกทัศน์กว้างไกล สื่อสารอย่างเข้าใจ</h3>
+            <p class="text-slate-300 text-xs leading-relaxed mb-4">
+              รอบรู้อย่างกว้างขวาง มีโลกทัศน์ที่กว้างไกล สื่อสารอย่างเข้าใจและเห็นคุณค่าของตนเอง ผู้อื่นและสังคม
+            </p>
+            <div class="space-y-2 pt-2 border-t border-slate-800/80">
+              <div class="flex items-start gap-2 text-xs text-slate-300">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-blue-400 shrink-0 mt-0.5"></i>
+                <span><strong>SPLO 1.1:</strong> บูรณาการศาสตร์ต่างๆ เพื่อใช้แก้ปัญหาได้อย่างเหมาะสม</span>
+              </div>
+              <div class="flex items-start gap-2 text-xs text-slate-300">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-blue-400 shrink-0 mt-0.5"></i>
+                <span><strong>SPLO 1.2:</strong> มีทักษะการสื่อสารที่จำเป็นในศาสตร์ต่างๆ</span>
+              </div>
+            </div>
+          </div>
+          <button onclick="switchPloTab(1)" class="mt-4 text-xs text-cyan-400 hover:text-cyan-300 flex items-center gap-1 font-semibold transition">
+            <span>ดูตารางความเชื่อมโยง 4 มิติ</span>
+            <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+
+        <!-- PLO 2 Card -->
+        <div class="glass-card p-6 rounded-2xl border-t-4 border-t-emerald-500 relative flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 text-xs font-bold code-font">PLOs 2</span>
+              <span class="text-[11px] text-slate-400 bg-slate-800 px-2 py-0.5 rounded">หมวดศึกษาทั่วไป</span>
+            </div>
+            <h3 class="font-bold text-white text-base mb-2">รู้เท่าทันเทคโนโลยี มีจิตสาธารณะ และมีคุณธรรมจริยธรรม</h3>
+            <p class="text-slate-300 text-xs leading-relaxed mb-4">
+              รู้เท่าทันเทคโนโลยี มีจิตอาสา สำนึกสาธารณะ เป็นพลเมืองที่มีคุณค่าและตระหนักในคุณธรรม จริยธรรม
+            </p>
+            <div class="space-y-2 pt-2 border-t border-slate-800/80">
+              <div class="flex items-start gap-2 text-xs text-slate-300">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+                <span><strong>SPLO 2.1:</strong> มีหลักคิด รู้เทคโนโลยีและปฏิบัติตนอย่างมีจริยธรรม</span>
+              </div>
+              <div class="flex items-start gap-2 text-xs text-slate-300">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+                <span><strong>SPLO 2.2:</strong> เคารพกฎกติกาของสังคม เคารพสิทธิการอยู่กับผู้อื่นในสังคม</span>
+              </div>
+            </div>
+          </div>
+          <button onclick="switchPloTab(2)" class="mt-4 text-xs text-cyan-400 hover:text-cyan-300 flex items-center gap-1 font-semibold transition">
+            <span>ดูตารางความเชื่อมโยง 4 มิติ</span>
+            <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+
+        <!-- PLO 3 Card -->
+        <div class="glass-card p-6 rounded-2xl border-t-4 border-t-cyan-500 relative flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-400 text-xs font-bold code-font">PLOs 3</span>
+              <span class="text-[11px] text-cyan-400 bg-cyan-950/80 border border-cyan-800/40 px-2 py-0.5 rounded">หมวดเฉพาะด้าน CS</span>
+            </div>
+            <h3 class="font-bold text-white text-base mb-2">พื้นฐานวิทยาการคอมพิวเตอร์ & พัฒนาซอฟต์แวร์</h3>
+            <p class="text-slate-300 text-xs leading-relaxed mb-4">
+              อธิบายความรู้พื้นฐานด้านวิทยาการคอมพิวเตอร์ และประยุกต์ใช้ความรู้เพื่อพัฒนาซอฟต์แวร์และแก้ปัญหาระบบสารสนเทศ
+            </p>
+            <div class="space-y-2 pt-2 border-t border-slate-800/80">
+              <div class="flex items-start gap-2 text-xs text-slate-300">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span><strong>SPLO 3.1:</strong> อธิบายความรู้พื้นฐาน CS คณิตศาสตร์ และการเขียนโปรแกรม</span>
+              </div>
+              <div class="flex items-start gap-2 text-xs text-slate-300">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span><strong>SPLO 3.2:</strong> ประยุกต์ใช้ความรู้และเทคโนโลยีสมัยใหม่พัฒนาซอฟต์แวร์และระบบคอมพิวเตอร์</span>
+              </div>
+            </div>
+          </div>
+          <button onclick="switchPloTab(3)" class="mt-4 text-xs text-cyan-400 hover:text-cyan-300 flex items-center gap-1 font-semibold transition">
+            <span>ดูตารางความเชื่อมโยง 4 มิติ</span>
+            <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+
+        <!-- PLO 4 Card -->
+        <div class="glass-card p-6 rounded-2xl border-t-4 border-t-purple-500 relative flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 rounded bg-purple-500/10 text-purple-400 text-xs font-bold code-font">PLOs 4</span>
+              <span class="text-[11px] text-purple-400 bg-purple-950/80 border border-purple-800/40 px-2 py-0.5 rounded">หมวดเฉพาะด้าน CS</span>
+            </div>
+            <h3 class="font-bold text-white text-base mb-2">วิเคราะห์ ออกแบบ พัฒนาระบบ & สื่อสารวิชาชีพ</h3>
+            <p class="text-slate-300 text-xs leading-relaxed mb-4">
+              วิเคราะห์ ประเมิน ออกแบบ และพัฒนาระบบซอฟต์แวร์ได้อย่างมีประสิทธิภาพ พร้อมทั้งใช้ภาษาอังกฤษ สื่อสาร สืบค้น และปฏิบัติงานด้วยจริยธรรม
+            </p>
+            <div class="space-y-2 pt-2 border-t border-slate-800/80">
+              <div class="flex items-start gap-2 text-xs text-slate-300">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-purple-400 shrink-0 mt-0.5"></i>
+                <span><strong>SPLO 4.1:</strong> วิเคราะห์ ประเมิน ออกแบบวิธีแก้ปัญหาด้วยวิธีทาง CS</span>
+              </div>
+              <div class="flex items-start gap-2 text-xs text-slate-300">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-purple-400 shrink-0 mt-0.5"></i>
+                <span><strong>SPLO 4.2:</strong> พัฒนาซอฟต์แวร์สอดคล้องกับความต้องการของผู้ใช้ระบบ</span>
+              </div>
+              <div class="flex items-start gap-2 text-xs text-slate-300">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-purple-400 shrink-0 mt-0.5"></i>
+                <span><strong>SPLO 4.3:</strong> ใช้ภาษาอังกฤษ สื่อสาร ทำงานร่วมกับผู้อื่น และมีจรรยาบรรณวิชาชีพ</span>
+              </div>
+            </div>
+          </div>
+          <button onclick="switchPloTab(4)" class="mt-4 text-xs text-cyan-400 hover:text-cyan-300 flex items-center gap-1 font-semibold transition">
+            <span>ดูตารางความเชื่อมโยง 4 มิติ</span>
+            <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+
+        <!-- PLO 5 Card -->
+        <div class="glass-card p-6 rounded-2xl border-t-4 border-t-amber-500 relative flex flex-col justify-between md:col-span-2 lg:col-span-2">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 text-xs font-bold code-font">PLOs 5</span>
+              <span class="text-[11px] text-amber-400 bg-amber-950/80 border border-amber-800/40 px-2 py-0.5 rounded">หมวดวิชาประสบการณ์จริง / สหกิจศึกษา</span>
+            </div>
+            <h3 class="font-bold text-white text-base mb-2">ปฏิบัติงานจริงในสถานประกอบการ & สหกิจศึกษา (Co-op Education)</h3>
+            <p class="text-slate-300 text-xs leading-relaxed mb-4">
+              ประยุกต์ใช้ความรู้และทักษะด้านคอมพิวเตอร์ในการปฏิบัติงานจริงในสถานประกอบการ สื่อสารและทำงานร่วมกับผู้อื่นได้อย่างมีประสิทธิภาพ พร้อมทั้งปฏิบัติงานด้วยความรับผิดชอบและจริยธรรมวิชาชีพ
+            </p>
+            <div class="grid sm:grid-cols-2 gap-3 pt-2 border-t border-slate-800/80">
+              <div class="flex items-start gap-2 text-xs text-slate-300">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
+                <span><strong>SPLO 5.1:</strong> ใช้ความรู้ ทักษะ ทัศนคติที่จำเป็นต่อการปฏิบัติงานจริง วางแผนและปรับตัวในการทำงานได้</span>
+              </div>
+              <div class="flex items-start gap-2 text-xs text-slate-300">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
+                <span><strong>SPLO 5.2:</strong> ประยุกต์ใช้ทักษะคอมพิวเตอร์ในสถานประกอบการจริง ทำงานร่วมกับผู้อื่น และมีจริยธรรมวิชาชีพ</span>
+              </div>
+            </div>
+          </div>
+          <button onclick="switchPloTab(5)" class="mt-4 text-xs text-cyan-400 hover:text-cyan-300 flex items-center gap-1 font-semibold transition">
+            <span>ดูตารางความเชื่อมโยง 4 มิติ</span>
+            <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- ================= CURRICULUM MAPPING MATRIX (2.4 ตารางแสดงความเชื่อมโยง) ================= -->
+      <div id="plo-matrix-container" class="mt-12">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+          <div>
+            <div class="inline-flex items-center gap-1.5 text-xs text-cyan-400 font-bold uppercase tracking-wider mb-1">
+              <i data-lucide="layers" class="w-4 h-4"></i>
+              <span>2.4 ตารางแสดงความเชื่อมโยงของผลลัพธ์การเรียนรู้</span>
+            </div>
+            <h3 class="text-2xl font-bold text-white">ตารางแสดงความเชื่อมโยงผลลัพธ์การเรียนรู้ 4 มิติ & รายวิชา</h3>
+            <p class="text-slate-400 text-xs sm:text-sm mt-1">
+              คลิกเลือก PLO เพื่อดูความเชื่อมโยงระหว่าง Sub-PLOs กับ ด้านความรู้, ทักษะ, จริยธรรม, ลักษณะบุคคล และรายวิชาที่รองรับ
+            </p>
+          </div>
+
+          <!-- PLO Tab Buttons -->
+          <div class="flex flex-wrap items-center gap-1.5 bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800 shrink-0">
+            <button onclick="switchPloTab(1)" id="plo-tab-btn-1" class="plo-tab-btn active px-3.5 py-2 rounded-xl font-bold text-xs transition-all flex items-center gap-1.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 shadow-lg shadow-cyan-500/25">
+              <span>PLO 1</span>
+            </button>
+            <button onclick="switchPloTab(2)" id="plo-tab-btn-2" class="plo-tab-btn px-3.5 py-2 rounded-xl font-bold text-xs transition-all flex items-center gap-1.5 bg-slate-900 text-slate-400 hover:text-white border border-slate-800">
+              <span>PLO 2</span>
+            </button>
+            <button onclick="switchPloTab(3)" id="plo-tab-btn-3" class="plo-tab-btn px-3.5 py-2 rounded-xl font-bold text-xs transition-all flex items-center gap-1.5 bg-slate-900 text-slate-400 hover:text-white border border-slate-800">
+              <span>PLO 3</span>
+            </button>
+            <button onclick="switchPloTab(4)" id="plo-tab-btn-4" class="plo-tab-btn px-3.5 py-2 rounded-xl font-bold text-xs transition-all flex items-center gap-1.5 bg-slate-900 text-slate-400 hover:text-white border border-slate-800">
+              <span>PLO 4</span>
+            </button>
+            <button onclick="switchPloTab(5)" id="plo-tab-btn-5" class="plo-tab-btn px-3.5 py-2 rounded-xl font-bold text-xs transition-all flex items-center gap-1.5 bg-slate-900 text-slate-400 hover:text-white border border-slate-800">
+              <span>PLO 5</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- PLO Panes Container -->
+        <div class="glass-card rounded-3xl border border-slate-800 overflow-hidden shadow-2xl p-6 sm:p-8">
+          
+          <!-- PLO 1 DETAIL PANE -->
+          <div id="plo-1-content" class="plo-pane space-y-8">
+            <div class="p-4 rounded-2xl bg-blue-950/30 border border-blue-800/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <span class="text-xs font-bold text-blue-400 code-font block">หมวดวิชาศึกษาทั่วไป</span>
+                <h4 class="text-lg font-bold text-white">PLOs 1. รอบรู้อย่างกว้างขวาง มีโลกทัศน์ที่กว้างไกล สื่อสารอย่างเข้าใจและเห็นคุณค่าของตนเอง ผู้อื่นและสังคม</h4>
+              </div>
+              <span class="text-xs bg-blue-500/10 text-blue-300 border border-blue-500/20 px-3 py-1 rounded-full shrink-0">General Education</span>
+            </div>
+
+            <!-- Sub-PLO 1.1 -->
+            <div class="space-y-4">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded bg-blue-500/20 text-cyan-300 font-bold text-xs code-font">Sub-PLOs 1.1</span>
+                <h5 class="text-base font-bold text-white">บูรณาการศาสตร์ต่างๆ เพื่อใช้แก้ปัญหาได้อย่างเหมาะสม</h5>
+              </div>
+
+              <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                <!-- ความรู้ -->
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-cyan-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
+                    <span>ด้านความรู้ (Knowledge)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>ประวัติความเป็นมาของ มทร.ตะวันออก</li>
+                    <li>หน้าที่พลเมืองไทยและพลเมืองโลก</li>
+                    <li>รอบรู้ในศาสตร์ต่างๆ มีโลกทัศน์และวิสัยทัศน์กว้างไกล เชื่อมโยงข้ามศาสตร์ได้</li>
+                    <li>ประวัติศาสตร์ภูมิปัญญา</li>
+                    <li>การพัฒนาที่ยั่งยืน (SDGs)</li>
+                    <li>การดูแลและปฐมพยาบาลสัตว์เบื้องต้น</li>
+                    <li>การสื่อสาร (พูด ฟัง เขียน อ่าน)</li>
+                    <li>เทคโนโลยีและนวัตกรรมพื้นฐานในวิชาชีพ</li>
+                    <li>การเงิน เศรษฐศาสตร์ และการลงทุน</li>
+                    <li>จรรยาบรรณในวิชาชีพ</li>
+                    <li>เศรษฐกิจ BCG (ชีวภาพ หมุนเวียน สีเขียว)</li>
+                    <li>การเขียนแผนธุรกิจ การจัดทำบัญชีและภาษี</li>
+                    <li>ความรู้เกี่ยวกับสิ่งแวดล้อม</li>
+                  </ul>
+                </div>
+
+                <!-- ทักษะ -->
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-emerald-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="zap" class="w-4 h-4"></i>
+                    <span>ด้านทักษะ (Skills)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>มีความคิดสร้างสรรค์</li>
+                    <li>ทักษะการคิด และวางแผนอย่างเป็นระบบ</li>
+                    <li>ทักษะการคิดวิเคราะห์การแก้ปัญหาโดยใช้ปัญญา</li>
+                    <li>คิดวิเคราะห์อย่างมีหลักการ เชิงตรรกะและเหตุผล</li>
+                    <li>ทักษะการปรับตัวอยู่ร่วมกับผู้อื่นในสังคม</li>
+                    <li>ทักษะการเรียนรู้ตลอดชีวิต (Lifelong Learning)</li>
+                  </ul>
+                </div>
+
+                <!-- จริยธรรม -->
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-purple-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>ด้านจริยธรรม (Ethics)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>มีวินัย รับผิดชอบ เคารพกฎระเบียบสังคม</li>
+                    <li>มีความซื่อสัตย์สุจริต</li>
+                    <li>สำนึกในตน เข้าใจผู้อื่น และเข้าใจโลก</li>
+                    <li>มีความเสียสละ มีจิตสาธารณะ</li>
+                    <li>แก้ปัญหาด้วยสันติวิธี ด้วยคุณธรรมและจริยธรรม</li>
+                    <li>เคารพกฎระเบียบและค่านิยมของสังคม</li>
+                  </ul>
+                </div>
+
+                <!-- ลักษณะบุคคล -->
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-amber-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                    <span>ด้านลักษณะบุคคล (Attributes)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>เข้าใจพื้นฐานการอยู่ร่วมกันในสังคม</li>
+                    <li>ใฝ่รู้ และแสวงหาความรู้ได้ด้วยตนเอง</li>
+                    <li>เข้าใจบทบาททำงานร่วมกันทั้งผู้นำและผู้ปฏิบัติ</li>
+                    <li>รับผิดชอบต่อตนเอง ส่วนรวม และสิ่งแวดล้อม</li>
+                    <li>นำความรู้ไปใช้พัฒนาสังคม</li>
+                    <li>คิดเชิงบวก ตระหนักถึงผลกระทบส่วนรวม</li>
+                    <li>ยอมรับความหลากหลายทางวัฒนธรรม</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- รายวิชาที่รองรับ -->
+              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-wrap items-center gap-2 text-xs">
+                <span class="font-bold text-cyan-400 shrink-0">📚 รายวิชาที่รองรับ:</span>
+                <span class="px-2.5 py-1 rounded-lg bg-blue-950/60 border border-blue-800/40 text-blue-300">15-01-001 อัตลักษณ์แห่งราชมงคลตะวันออก (บังคับ)</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-03-009 ภูมิปัญญาเพื่อการประกอบอาชีพ</span>
+                <span class="px-2.5 py-1 rounded-lg bg-blue-950/60 border border-blue-800/40 text-blue-300">15-06-027 ความเป็นพลเมืองไทยและพลเมืองโลก (บังคับ)</span>
+                <span class="px-2.5 py-1 rounded-lg bg-blue-950/60 border border-blue-800/40 text-blue-300">15-06-028 วิถีโลก (บังคับ)</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-06-029 สมเด็จพระเจ้าตากสินศึกษาสู่การเรียนรู้ตลอดชีวิต</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-03-037 การพยาบาลสัตว์เบื้องต้น</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-03-038 ธุรกิจสัตว์เลี้ยง</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-03-046 เครือข่ายธุรกิจยุคดิจิทัล</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-03-052 กลยุทธ์สำหรับผู้ประกอบการภูมิปัญญาท้องถิ่น</span>
+              </div>
+            </div>
+
+            <!-- Sub-PLO 1.2 -->
+            <div class="space-y-4 pt-6 border-t border-slate-800/80">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded bg-blue-500/20 text-cyan-300 font-bold text-xs code-font">Sub-PLOs 1.2</span>
+                <h5 class="text-base font-bold text-white">มีทักษะการสื่อสารที่จำเป็นในศาสตร์ต่างๆ</h5>
+              </div>
+
+              <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-cyan-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
+                    <span>ด้านความรู้ (Knowledge)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>การสื่อสาร (พูด ฟัง เขียน อ่าน)</li>
+                    <li>เทคโนโลยีและนวัตกรรมพื้นฐานสนับสนุนการเรียนรู้และการทำงานในวิชาชีพ</li>
+                    <li>ความรู้ในหลักภาษาต่างๆ</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-emerald-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="zap" class="w-4 h-4"></i>
+                    <span>ด้านทักษะ (Skills)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>มีความคิดสร้างสรรค์</li>
+                    <li>ทักษะการคิด และวางแผนอย่างเป็นระบบ</li>
+                    <li>คิดวิเคราะห์อย่างมีหลักการ ตรรกะและเหตุผล</li>
+                    <li>ทักษะการเรียนรู้ตลอดชีวิต</li>
+                    <li>ใช้เทคโนโลยีสารสนเทศเพื่อประกอบการสื่อสาร</li>
+                    <li>สื่อสารอย่างสร้างสรรค์ และตรงประเด็น</li>
+                    <li>เลือกใช้เทคโนโลยีดิจิทัลได้อย่างเหมาะสม</li>
+                    <li>เลือกใช้ข้อมูลที่ถูกต้อง</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-purple-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>ด้านจริยธรรม (Ethics)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>มีวินัย มีความรับผิดชอบ เคารพกฎระเบียบองค์กรและสังคม</li>
+                    <li>มีความซื่อสัตย์สุจริต</li>
+                    <li>มีความสำนึกในตน เข้าใจผู้อื่น และเข้าใจโลก</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-amber-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                    <span>ด้านลักษณะบุคคล (Attributes)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>เข้าใจพื้นฐานการอยู่ร่วมกันในสังคม</li>
+                    <li>ใฝ่รู้ และแสวงหาความรู้ได้ด้วยตนเอง</li>
+                    <li>เข้าใจบทบาททำงานร่วมกันทั้งผู้นำหรือผู้ปฏิบัติ</li>
+                    <li>นำความรู้ไปใช้พัฒนาสังคม</li>
+                    <li>ยอมรับความหลากหลายทางวัฒนธรรม</li>
+                    <li>มีมนุษยสัมพันธ์ที่ดีกับผู้อื่น</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- รายวิชาที่รองรับ -->
+              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-wrap items-center gap-2 text-xs">
+                <span class="font-bold text-cyan-400 shrink-0">📚 รายวิชาที่รองรับ:</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-04-015 ศาสตร์แห่งการสื่อสาร</span>
+                <span class="px-2.5 py-1 rounded-lg bg-blue-950/60 border border-blue-800/40 text-blue-300">15-04-016 ภาษาอังกฤษเพื่อการสื่อสาร (เลือกได้)</span>
+                <span class="px-2.5 py-1 rounded-lg bg-blue-950/60 border border-blue-800/40 text-blue-300">15-04-017 ภาษาจีนเพื่อการสื่อสารและการเรียนรู้วัฒนธรรม (เลือกได้)</span>
+                <span class="px-2.5 py-1 rounded-lg bg-blue-950/60 border border-blue-800/40 text-blue-300">15-04-018 การใช้ภาษาไทยในชีวิตประจำวัน (เลือกได้)</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-04-019 ทักษะภาษาอังกฤษสำหรับผู้ประกอบการออนไลน์</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-04-020 ทักษะการเรียนภาษาอังกฤษผ่านสื่ออิเล็กทรอนิกส์</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-04-021 เทคนิคการพูดเพื่อความสำเร็จ</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-04-022 การเขียนเพื่อการสื่อสารธุรกิจ</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- PLO 2 DETAIL PANE -->
+          <div id="plo-2-content" class="plo-pane hidden space-y-8">
+            <div class="p-4 rounded-2xl bg-emerald-950/30 border border-emerald-800/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <span class="text-xs font-bold text-emerald-400 code-font block">หมวดวิชาศึกษาทั่วไป</span>
+                <h4 class="text-lg font-bold text-white">PLOs 2. รู้เท่าทันเทคโนโลยี มีจิตอาสา สำนึกสาธารณะ เป็นพลเมืองที่มีคุณค่าและตระหนักในคุณธรรม จริยธรรม</h4>
+              </div>
+              <span class="text-xs bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 px-3 py-1 rounded-full shrink-0">General Education</span>
+            </div>
+
+            <!-- Sub-PLO 2.1 -->
+            <div class="space-y-4">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold text-xs code-font">Sub-PLOs 2.1</span>
+                <h5 class="text-base font-bold text-white">มีหลักคิด รู้เทคโนโลยีและปฏิบัติตนอย่างมีจริยธรรม</h5>
+              </div>
+
+              <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-cyan-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
+                    <span>ด้านความรู้ (Knowledge)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>เทคโนโลยีและนวัตกรรมพื้นฐานในวิชาชีพ</li>
+                    <li>การเงิน เศรษฐศาสตร์ และการลงทุน</li>
+                    <li>จรรยาบรรณในวิชาชีพ</li>
+                    <li>เศรษฐกิจชีวภาพ เศรษฐกิจหมุนเวียน และเศรษฐกิจสีเขียว (BCG)</li>
+                    <li>การเขียนแผนธุรกิจ การจัดทำบัญชีและภาษี</li>
+                    <li>หลักคณิตศาสตร์และสถิติ</li>
+                    <li>สิทธิพื้นฐาน กฎหมาย ประกันสังคม ประกันสุขภาพ</li>
+                    <li>กระบวนการวิจัยเชิงปริมาณและคุณภาพ</li>
+                    <li>ทักษะปัญญาประดิษฐ์ (AI) และธุรกิจดิจิทัล</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-emerald-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="zap" class="w-4 h-4"></i>
+                    <span>ด้านทักษะ (Skills)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>มีความคิดสร้างสรรค์</li>
+                    <li>ทักษะการคิด และวางแผนอย่างเป็นระบบ</li>
+                    <li>ทักษะการวิเคราะห์แก้ปัญหาโดยใช้ปัญญา</li>
+                    <li>คิดวิเคราะห์อย่างมีหลักการ ตรรกะและเหตุผล</li>
+                    <li>ทักษะการเรียนรู้ตลอดชีวิต</li>
+                    <li>ใช้เทคโนโลยีดิจิทัลประกอบการสื่อสาร</li>
+                    <li>สื่อสารสร้างสรรค์และตรงประเด็น</li>
+                    <li>เลือกใช้เทคโนโลยีดิจิทัลและข้อมูลที่ถูกต้อง</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-purple-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>ด้านจริยธรรม (Ethics)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>มีวินัย มีความรับผิดชอบ เคารพกฎระเบียบ</li>
+                    <li>มีความซื่อสัตย์สุจริต</li>
+                    <li>สำนึกในตน เข้าใจผู้อื่น และเข้าใจโลก</li>
+                    <li>มีความเสียสละและมีจิตสาธารณะ</li>
+                    <li>แก้ปัญหาด้วยสันติวิธีด้วยคุณธรรมจริยธรรม</li>
+                    <li>เคารพกฎระเบียบและค่านิยมของสังคม</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-amber-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                    <span>ด้านลักษณะบุคคล (Attributes)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>เข้าใจพื้นฐานการอยู่ร่วมกันในสังคม</li>
+                    <li>ใฝ่รู้ และแสวงหาความรู้ได้ด้วยตนเอง</li>
+                    <li>เข้าใจบทบาททำงานร่วมกันทั้งผู้นำและผู้ปฏิบัติ</li>
+                    <li>รับผิดชอบต่อตนเอง ส่วนรวม และสิ่งแวดล้อม</li>
+                    <li>นำความรู้ไปใช้พัฒนาสังคม</li>
+                    <li>คิดเชิงบวก ตระหนักถึงผลกระทบต่อส่วนรวม</li>
+                    <li>มีมนุษยสัมพันธ์ที่ดีกับผู้อื่น</li>
+                    <li>กล้าคิด กล้าทำ และรับผิดชอบในสิ่งที่ทำ</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- รายวิชาที่รองรับ -->
+              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-wrap items-center gap-2 text-xs">
+                <span class="font-bold text-emerald-400 shrink-0">📚 รายวิชาที่รองรับ:</span>
+                <span class="px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-800/40 text-emerald-300">15-02-003 การคิดอย่างมีวิจารณญาณและการแก้ปัญหา</span>
+                <span class="px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-800/40 text-emerald-300">15-02-004 คุณธรรมและจริยธรรมในสังคมดิจิทัล (บังคับ)</span>
+                <span class="px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-800/40 text-emerald-300">15-03-007 ความฉลาดทางเทคโนโลยีสารสนเทศในยุคดิจิทัล (บังคับ)</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-03-005 ผู้ประกอบการนวัตกรรม</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-03-006 การจัดการเศรษฐกิจชีวภาพ เศรษฐกิจหมุนเวียนและเศรษฐกิจสีเขียว</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-03-008 คณิตศาสตร์และสถิติเพื่อการประกอบอาชีพ</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-03-010 การวิเคราะห์และนำเสนอข้อมูลด้วยเทคโนโลยีดิจิทัล</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-03-044 ทักษะการใช้ปัญญาประดิษฐ์</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-03-053 ระบบนิเวศทางธุรกิจดิจิทัล</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">และวิชาชีพเลือกกลุ่มผู้ประกอบการ/การเงินยุคดิจิทัล</span>
+              </div>
+            </div>
+
+            <!-- Sub-PLO 2.2 -->
+            <div class="space-y-4 pt-6 border-t border-slate-800/80">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold text-xs code-font">Sub-PLOs 2.2</span>
+                <h5 class="text-base font-bold text-white">เคารพกฎกติกาของสังคม เคารพสิทธิการอยู่กับผู้อื่นในสังคม</h5>
+              </div>
+
+              <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-cyan-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
+                    <span>ด้านความรู้ (Knowledge)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>รอบรู้ในศาสตร์ต่างๆ และเชื่อมโยงความรู้ข้ามศาสตร์</li>
+                    <li>ประวัติศาสตร์และภูมิปัญญา</li>
+                    <li>เทคโนโลยีและนวัตกรรมพื้นฐานในวิชาชีพ</li>
+                    <li>จรรยาบรรณในวิชาชีพและสิ่งแวดล้อม</li>
+                    <li>สิทธิพื้นฐาน กฎหมาย ประกันสังคม ประกันสุขภาพ</li>
+                    <li>วิทยาศาสตร์ สุขภาวะ และอาชีวอนามัยและความปลอดภัย</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-emerald-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="zap" class="w-4 h-4"></i>
+                    <span>ด้านทักษะ (Skills)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>ความคิดสร้างสรรค์</li>
+                    <li>ทักษะการคิด และวางแผนอย่างเป็นระบบ</li>
+                    <li>คิดวิเคราะห์แก้ปัญหาโดยใช้ปัญญาและตรรกะ</li>
+                    <li>ทักษะการปรับตัวอยู่ร่วมกับผู้อื่นในสังคม</li>
+                    <li>การเรียนรู้ตลอดชีวิต</li>
+                    <li>สื่อสารอย่างสร้างสรรค์และตรงประเด็น</li>
+                    <li>เลือกใช้เทคโนโลยีดิจิทัลและข้อมูลที่ถูกต้อง</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-purple-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>ด้านจริยธรรม (Ethics)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>มีวินัย มีความรับผิดชอบ เคารพกฎระเบียบ</li>
+                    <li>มีความซื่อสัตย์สุจริต</li>
+                    <li>สำนึกในตน เข้าใจผู้อื่น และเข้าใจโลก</li>
+                    <li>มีความเสียสละ และมีจิตสาธารณะ</li>
+                    <li>แก้ปัญหาด้วยหลักสันติวิธี</li>
+                    <li>เคารพกฎระเบียบและค่านิยมของสังคม</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-amber-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                    <span>ด้านลักษณะบุคคล (Attributes)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>เข้าใจพื้นฐานการอยู่ร่วมกันในสังคม</li>
+                    <li>ใฝ่รู้และแสวงหาความรู้ด้วยตนเอง</li>
+                    <li>เข้าใจบทบาททำงานร่วมกันทั้งผู้นำและผู้ปฏิบัติ</li>
+                    <li>รับผิดชอบต่อตนเอง ส่วนรวม และสิ่งแวดล้อม</li>
+                    <li>นำความรู้ไปใช้พัฒนาสังคม</li>
+                    <li>คิดเชิงบวก และตระหนักถึงผลกระทบส่วนรวม</li>
+                    <li>ยอมรับความหลากหลายทางวัฒนธรรม</li>
+                    <li>มีมนุษยสัมพันธ์ที่ดี กล้าคิด กล้าทำ รับผิดชอบ</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- รายวิชาที่รองรับ -->
+              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-wrap items-center gap-2 text-xs">
+                <span class="font-bold text-emerald-400 shrink-0">📚 รายวิชาที่รองรับ:</span>
+                <span class="px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-800/40 text-emerald-300">15-02-002 คุณภาพการใช้ชีวิต (บังคับ)</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-02-024 ทักษะชีวิต</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-05-025 การพัฒนาบุคลิกภาพเพื่อความสัมพันธ์ในสังคม</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-05-026 โลกของการทำงานและกระแสการเปลี่ยนแปลง</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">15-03-031 เสี่ยงอย่างชาญฉลาดเคล็ดลับความปลอดภัยสำหรับผู้ประกอบการ</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- PLO 3 DETAIL PANE -->
+          <div id="plo-3-content" class="plo-pane hidden space-y-8">
+            <div class="p-4 rounded-2xl bg-cyan-950/30 border border-cyan-800/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <span class="text-xs font-bold text-cyan-400 code-font block">หมวดวิชาเฉพาะด้าน CS</span>
+                <h4 class="text-lg font-bold text-white">PLOs 3. อธิบายความรู้พื้นฐานด้านวิทยาการคอมพิวเตอร์ และประยุกต์ใช้ความรู้เพื่อพัฒนาซอฟต์แวร์และแก้ปัญหาระบบสารสนเทศ</h4>
+              </div>
+              <span class="text-xs bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 px-3 py-1 rounded-full shrink-0">CS Major Core</span>
+            </div>
+
+            <!-- Sub-PLO 3.1 -->
+            <div class="space-y-4">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-bold text-xs code-font">Sub-PLOs 3.1</span>
+                <h5 class="text-base font-bold text-white">อธิบายความรู้พื้นฐานทางด้านวิทยาการคอมพิวเตอร์ คณิตศาสตร์ และการเขียนโปรแกรม</h5>
+              </div>
+
+              <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-cyan-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
+                    <span>ด้านความรู้ (Knowledge)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>เข้าใจแนวคิดพื้นฐานทางด้านวิทยาการคอมพิวเตอร์และคณิตศาสตร์</li>
+                    <li>รู้หลักการเขียนโปรแกรมและการคิดเชิงตรรกะ</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-emerald-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="zap" class="w-4 h-4"></i>
+                    <span>ด้านทักษะ (Skills)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>ประยุกต์ใช้ความรู้คณิตศาสตร์และตรรกะเพื่อการคิดเชิงวิเคราะห์และคำนวณ</li>
+                    <li>เขียนโปรแกรมเพื่อแก้ปัญหาได้อย่างถูกต้อง</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-purple-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>ด้านจริยธรรม (Ethics)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>ใช้ความรู้ด้านคอมพิวเตอร์อย่างมีความรับผิดชอบ ไม่ละเมิดลิขสิทธิ์หรือทรัพย์สินทางปัญญา</li>
+                    <li>ตระหนักถึงผลกระทบของการพัฒนาโปรแกรมต่อผู้ใช้และสังคม</li>
+                    <li>มีความซื่อสัตย์ทางวิชาการและในการทำงานด้านซอฟต์แวร์</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-amber-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                    <span>ด้านลักษณะบุคคล (Attributes)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>มีความใฝ่รู้และพร้อมพัฒนาตนเองด้านวิทยาการคอมพิวเตอร์อย่างต่อเนื่อง</li>
+                    <li>ทำงานร่วมกับผู้อื่นได้ดี มีทัศนคติที่ดีต่อการเรียนรู้และการแก้ปัญหา</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- รายวิชาที่รองรับ -->
+              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-wrap items-center gap-2 text-xs">
+                <span class="font-bold text-cyan-400 shrink-0">📚 รายวิชาที่รองรับ:</span>
+                <span class="px-2.5 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800/40 text-cyan-300">06-01-100 คณิตศาสตร์</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">06-01-101 คณิตศาสตร์ประยุกต์ทางธุรกิจ</span>
+                <span class="px-2.5 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800/40 text-cyan-300">06-01-313 คณิตศาสตร์ดิสครีตและทฤษฎีการคำนวณ</span>
+                <span class="px-2.5 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800/40 text-cyan-300">06-07-101 หลักสถิติ</span>
+                <span class="px-2.5 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800/40 text-cyan-300">06-13-101 การโปรแกรมคอมพิวเตอร์</span>
+                <span class="px-2.5 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800/40 text-cyan-300">06-13-103 ภาษาโปรแกรมและกรอบความคิด</span>
+                <span class="px-2.5 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800/40 text-cyan-300">06-14-101 วิทยาการคอมพิวเตอร์เบื้องต้น</span>
+                <span class="px-2.5 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800/40 text-cyan-300">06-14-102 ระบบปฏิบัติการ</span>
+                <span class="px-2.5 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800/40 text-cyan-300">06-15-102 โครงสร้างและสถาปัตยกรรมคอมพิวเตอร์</span>
+              </div>
+            </div>
+
+            <!-- Sub-PLO 3.2 -->
+            <div class="space-y-4 pt-6 border-t border-slate-800/80">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-bold text-xs code-font">Sub-PLOs 3.2</span>
+                <h5 class="text-base font-bold text-white">ประยุกต์ใช้ความรู้ ทักษะ และเทคโนโลยีสมัยใหม่เพื่อพัฒนาซอฟต์แวร์และระบบคอมพิวเตอร์</h5>
+              </div>
+
+              <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-cyan-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
+                    <span>ด้านความรู้ (Knowledge)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>รู้จักเทคโนโลยีและเครื่องมือที่ทันสมัย (IoT, Cloud, Security)</li>
+                    <li>เข้าใจแนวโน้มและนวัตกรรมใหม่ๆ ทางด้านคอมพิวเตอร์และซอฟต์แวร์</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-emerald-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="zap" class="w-4 h-4"></i>
+                    <span>ด้านทักษะ (Skills)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>ประยุกต์ใช้เทคโนโลยีในการพัฒนาซอฟต์แวร์และระบบคอมพิวเตอร์เพื่อตอบสนองความต้องการของผู้ใช้</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-purple-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>ด้านจริยธรรม (Ethics)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>ใช้ความรู้ด้านคอมพิวเตอร์อย่างมีความรับผิดชอบ ไม่ละเมิดทรัพย์สินทางปัญญา</li>
+                    <li>ตระหนักถึงผลกระทบต่อสังคม</li>
+                    <li>มีความซื่อสัตย์ทางวิชาการและในการทำงานด้านซอฟต์แวร์</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-amber-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                    <span>ด้านลักษณะบุคคล (Attributes)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>มีความใฝ่รู้และพร้อมพัฒนาตนเองด้านวิทยาการคอมพิวเตอร์อย่างต่อเนื่อง</li>
+                    <li>ทำงานร่วมกับผู้อื่นได้ดี มีทัศนคติที่ดีต่อการเรียนรู้และการแก้ปัญหา</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- รายวิชาที่รองรับ -->
+              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-wrap items-center gap-2 text-xs">
+                <span class="font-bold text-cyan-400 shrink-0">📚 รายวิชาที่รองรับ:</span>
+                <span class="px-2.5 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800/40 text-cyan-300">06-12-214 ระบบฝังตัวและอินเทอร์เน็ตของสรรพสิ่ง (IoT)</span>
+                <span class="px-2.5 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800/40 text-cyan-300">06-12-304 คอมพิวเตอร์กราฟิก</span>
+                <span class="px-2.5 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800/40 text-cyan-300">06-13-203 วิศวกรรมซอฟต์แวร์และการบริหารโครงการ</span>
+                <span class="px-2.5 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800/40 text-cyan-300">06-14-305 การสื่อสารข้อมูลและเครือข่ายคอมพิวเตอร์</span>
+                <span class="px-2.5 py-1 rounded-lg bg-cyan-950/60 border border-cyan-800/40 text-cyan-300">06-14-411 ความมั่นคงปลอดภัยทางไซเบอร์ (Cybersecurity)</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- PLO 4 DETAIL PANE -->
+          <div id="plo-4-content" class="plo-pane hidden space-y-8">
+            <div class="p-4 rounded-2xl bg-purple-950/30 border border-purple-800/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <span class="text-xs font-bold text-purple-400 code-font block">หมวดวิชาเฉพาะด้าน CS</span>
+                <h4 class="text-lg font-bold text-white">PLOs 4. วิเคราะห์ ประเมิน ออกแบบ และพัฒนาระบบซอฟต์แวร์ได้อย่างมีประสิทธิภาพ พร้อมทั้งใช้ภาษาอังกฤษ สื่อสาร สืบค้น ทำงานร่วมกับผู้อื่น และปฏิบัติงานด้วยจริยธรรมวิชาชีพ</h4>
+              </div>
+              <span class="text-xs bg-purple-500/10 text-purple-300 border border-purple-500/20 px-3 py-1 rounded-full shrink-0">CS Major Core</span>
+            </div>
+
+            <!-- Sub-PLO 4.1 -->
+            <div class="space-y-4">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-bold text-xs code-font">Sub-PLOs 4.1</span>
+                <h5 class="text-base font-bold text-white">วิเคราะห์ ประเมิน และออกแบบวิธีแก้ปัญหาด้วยวิธีการทางวิทยาการคอมพิวเตอร์</h5>
+              </div>
+
+              <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-cyan-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
+                    <span>ด้านความรู้ (Knowledge)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>เข้าใจหลักการวิเคราะห์ปัญหา อัลกอริทึม และโครงสร้างข้อมูลเพื่อใช้ในการแก้ปัญหาทางซอฟต์แวร์</li>
+                    <li>รู้จักกระบวนการวิเคราะห์ระบบ และแนวทางการออกแบบระบบ</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-emerald-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="zap" class="w-4 h-4"></i>
+                    <span>ด้านทักษะ (Skills)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>วิเคราะห์ และออกแบบระบบให้สอดคล้องกับปัญหา</li>
+                    <li>เลือกใช้เครื่องมือและเทคโนโลยีในการวิเคราะห์และออกแบบระบบได้อย่างเหมาะสม</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-purple-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>ด้านจริยธรรม (Ethics)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>ใช้ความรู้ด้านคอมพิวเตอร์อย่างมีความรับผิดชอบ ไม่ละเมิดทรัพย์สินทางปัญญา</li>
+                    <li>ตระหนักถึงผลกระทบต่อผู้ใช้และสังคม</li>
+                    <li>มีความซื่อสัตย์ทางวิชาการและในการทำงานด้านซอฟต์แวร์</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-amber-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                    <span>ด้านลักษณะบุคคล (Attributes)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>ใฝ่รู้และพร้อมพัฒนาตนเองด้าน CS อย่างต่อเนื่อง</li>
+                    <li>ทำงานร่วมกับผู้อื่นได้ดี มีทัศนคติที่ดีต่อการเรียนรู้และการแก้ปัญหา</li>
+                    <li>มีความรอบคอบ ละเอียดถี่ถ้วน และใส่ใจคุณภาพของงาน</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- รายวิชาที่รองรับ -->
+              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-wrap items-center gap-2 text-xs">
+                <span class="font-bold text-purple-400 shrink-0">📚 รายวิชาที่รองรับ:</span>
+                <span class="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 text-purple-300">06-12-201 ระบบฐานข้อมูลเชิงสัมพันธ์</span>
+                <span class="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 text-purple-300">06-12-303 ปัญญาประดิษฐ์และการวิเคราะห์ข้อมูล (AI & Data)</span>
+                <span class="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 text-purple-300">06-12-305 การวิเคราะห์และออกแบบระบบ</span>
+                <span class="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 text-purple-300">06-14-203 โครงสร้างข้อมูลและขั้นตอนวิธี</span>
+                <span class="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 text-purple-300">06-15-404 ปฏิสัมพันธ์ระหว่างมนุษย์และคอมพิวเตอร์ (HCI)</span>
+              </div>
+            </div>
+
+            <!-- Sub-PLO 4.2 -->
+            <div class="space-y-4 pt-6 border-t border-slate-800/80">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-bold text-xs code-font">Sub-PLOs 4.2</span>
+                <h5 class="text-base font-bold text-white">พัฒนาซอฟต์แวร์ที่สอดคล้องกับความต้องการของผู้ใช้ระบบ</h5>
+              </div>
+
+              <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-cyan-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
+                    <span>ด้านความรู้ (Knowledge)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>มีความรู้พื้นฐานด้านเครื่องมือและเทคโนโลยีสำหรับการพัฒนาซอฟต์แวร์สมัยใหม่</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-emerald-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="zap" class="w-4 h-4"></i>
+                    <span>ด้านทักษะ (Skills)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>พัฒนาซอฟต์แวร์ตรงตามความต้องการของผู้ใช้ระบบ</li>
+                    <li>เลือกใช้เครื่องมือและเทคโนโลยีในการพัฒนาระบบได้อย่างเหมาะสม</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-purple-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>ด้านจริยธรรม (Ethics)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>ใช้ความรู้ด้านคอมพิวเตอร์อย่างรับผิดชอบ ไม่ละเมิดทรัพย์สินทางปัญญา</li>
+                    <li>ตระหนักถึงผลกระทบของการพัฒนาโปรแกรมต่อผู้ใช้และสังคม</li>
+                    <li>มีความซื่อสัตย์ทางวิชาการและในการทำงานด้านซอฟต์แวร์</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-amber-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                    <span>ด้านลักษณะบุคคล (Attributes)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>ใฝ่รู้และพร้อมพัฒนาตนเองด้าน CS อย่างต่อเนื่อง</li>
+                    <li>ทำงานร่วมกับผู้อื่นได้ดี มีทัศนคติที่ดีต่อการเรียนรู้และการแก้ปัญหา</li>
+                    <li>มีความรอบคอบ ละเอียดถี่ถ้วน และใส่ใจคุณภาพของงาน</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- รายวิชาที่รองรับ -->
+              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-wrap items-center gap-2 text-xs">
+                <span class="font-bold text-purple-400 shrink-0">📚 รายวิชาที่รองรับ:</span>
+                <span class="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 text-purple-300">06-12-215 การพัฒนาโปรแกรมประยุกต์สำหรับอุปกรณ์เคลื่อนที่ (Mobile App)</span>
+                <span class="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 text-purple-300">06-13-205 การพัฒนาเว็บแอปพลิเคชัน (Web Application)</span>
+                <span class="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 text-purple-300">06-13-408 โครงงานคอมพิวเตอร์ (Senior Project)</span>
+              </div>
+            </div>
+
+            <!-- Sub-PLO 4.3 -->
+            <div class="space-y-4 pt-6 border-t border-slate-800/80">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-bold text-xs code-font">Sub-PLOs 4.3</span>
+                <h5 class="text-base font-bold text-white">ใช้ภาษาอังกฤษ สื่อสาร สืบค้น ทำงานร่วมกับผู้อื่น ปฏิบัติงานด้วยจรรยาบรรณและกฎหมายที่เกี่ยวข้อง</h5>
+              </div>
+
+              <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-cyan-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
+                    <span>ด้านความรู้ (Knowledge)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>หลักการใช้ภาษาอังกฤษเพื่อการสื่อสารด้านวิชาการและวิชาชีพคอมพิวเตอร์</li>
+                    <li>กฎหมายดิจิทัลและข้อกำหนดที่เกี่ยวข้องกับการทำงานด้านคอมพิวเตอร์และซอฟต์แวร์</li>
+                    <li>จรรยาบรรณวิชาชีพและความรับผิดชอบต่อสังคม</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-emerald-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="zap" class="w-4 h-4"></i>
+                    <span>ด้านทักษะ (Skills)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>ใช้ภาษาอังกฤษสื่อสารทั้งการพูดและเขียนได้อย่างเหมาะสมในบริบทวิชาชีพ</li>
+                    <li>ทำงานร่วมกับผู้อื่นได้อย่างมีประสิทธิภาพ</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-purple-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>ด้านจริยธรรม (Ethics)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>ใช้ความรู้ด้านคอมพิวเตอร์อย่างรับผิดชอบ ไม่ละเมิดทรัพย์สินทางปัญญา</li>
+                    <li>ตระหนักถึงผลกระทบของการพัฒนาโปรแกรมต่อผู้ใช้และสังคม</li>
+                    <li>มีความซื่อสัตย์ทางวิชาการและในการทำงานด้านซอฟต์แวร์</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-amber-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                    <span>ด้านลักษณะบุคคล (Attributes)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>มีความใฝ่รู้และพร้อมพัฒนาตนเองด้านวิทยาการคอมพิวเตอร์อย่างต่อเนื่อง</li>
+                    <li>ทำงานร่วมกับผู้อื่นได้ดี มีทัศนคติที่ดีต่อการเรียนรู้และการแก้ปัญหา</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- รายวิชาที่รองรับ -->
+              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-wrap items-center gap-2 text-xs">
+                <span class="font-bold text-purple-400 shrink-0">📚 รายวิชาที่รองรับ:</span>
+                <span class="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 text-purple-300">06-10-301 ภาษาอังกฤษสำหรับวิทยาการคอมพิวเตอร์</span>
+                <span class="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 text-purple-300">06-11-301 จรรยาบรรณวิชาชีพและกฎหมายดิจิทัล</span>
+                <span class="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 text-purple-300">06-11-405 สัมมนาทางวิทยาการคอมพิวเตอร์</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- PLO 5 DETAIL PANE -->
+          <div id="plo-5-content" class="plo-pane hidden space-y-8">
+            <div class="p-4 rounded-2xl bg-amber-950/30 border border-amber-800/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <span class="text-xs font-bold text-amber-400 code-font block">หมวดวิชาประสบการณ์จริง / สหกิจศึกษา</span>
+                <h4 class="text-lg font-bold text-white">PLOs 5. ประยุกต์ใช้ความรู้และทักษะด้านคอมพิวเตอร์ในการปฏิบัติงานจริงในสถานประกอบการ สื่อสารและทำงานร่วมกับผู้อื่นได้อย่างมีประสิทธิภาพ พร้อมทั้งปฏิบัติงานด้วยความรับผิดชอบและจริยธรรมวิชาชีพ</h4>
+              </div>
+              <span class="text-xs bg-amber-500/10 text-amber-300 border border-amber-500/20 px-3 py-1 rounded-full shrink-0">Co-op & Practicum</span>
+            </div>
+
+            <!-- Sub-PLO 5.1 -->
+            <div class="space-y-4">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold text-xs code-font">Sub-PLOs 5.1</span>
+                <h5 class="text-base font-bold text-white">ใช้ความรู้ ทักษะ และทัศนคติที่จำเป็นต่อการปฏิบัติงานจริง รวมทั้งสามารถวางแผนและปรับตัวเพื่อการทำงานในสถานประกอบการได้</h5>
+              </div>
+
+              <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-cyan-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
+                    <span>ด้านความรู้ (Knowledge)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>เข้าใจกระบวนการทำงานและโครงสร้างการทำงานของสถานประกอบการ</li>
+                    <li>รู้จักแนวทางการวางแผนงาน และการจัดการเวลา</li>
+                    <li>เข้าใจบทบาทหน้าที่และความคาดหวังของบุคลากรในวิชาชีพ</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-emerald-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="zap" class="w-4 h-4"></i>
+                    <span>ด้านทักษะ (Skills)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>วางแผนการทำงานและบริหารเวลาได้อย่างเหมาะสม</li>
+                    <li>ทำงานร่วมกับผู้อื่นและสื่อสารได้อย่างมีประสิทธิภาพ</li>
+                    <li>สามารถปรับตัวให้เข้ากับผู้ร่วมงานที่มีความหลากหลาย</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-purple-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>ด้านจริยธรรม (Ethics)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>ใช้ความรู้ด้านคอมพิวเตอร์อย่างมีความรับผิดชอบ ไม่ละเมิดทรัพย์สินทางปัญญา</li>
+                    <li>ตระหนักถึงผลกระทบต่อผู้ใช้และสังคม</li>
+                    <li>มีความซื่อสัตย์ทางวิชาการและในการทำงานด้านซอฟต์แวร์</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-amber-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                    <span>ด้านลักษณะบุคคล (Attributes)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>ใฝ่รู้และพร้อมพัฒนาตนเองด้าน CS อย่างต่อเนื่อง</li>
+                    <li>ทำงานร่วมกับผู้อื่นได้ดี มีทัศนคติที่ดีต่อการเรียนรู้และการแก้ปัญหา</li>
+                    <li>มีความรอบคอบ ละเอียดถี่ถ้วน และใส่ใจคุณภาพของงาน</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- รายวิชาที่รองรับ -->
+              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-wrap items-center gap-2 text-xs">
+                <span class="font-bold text-amber-400 shrink-0">📚 รายวิชาที่รองรับ:</span>
+                <span class="px-2.5 py-1 rounded-lg bg-amber-950/60 border border-amber-800/40 text-amber-300">06-11-302 เตรียมฝึกประสบการณ์วิชาชีพ (ชั้นปีที่ 3 เทอม 1)</span>
+              </div>
+            </div>
+
+            <!-- Sub-PLO 5.2 -->
+            <div class="space-y-4 pt-6 border-t border-slate-800/80">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold text-xs code-font">Sub-PLOs 5.2</span>
+                <h5 class="text-base font-bold text-white">ประยุกต์ใช้ความรู้และทักษะด้านคอมพิวเตอร์ในการปฏิบัติงานจริงในสถานประกอบการ สื่อสารและทำงานร่วมกับผู้อื่นอย่างมีประสิทธิภาพ พร้อมทั้งแสดงออกถึงความรับผิดชอบและจริยธรรมวิชาชีพ</h5>
+              </div>
+
+              <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-cyan-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
+                    <span>ด้านความรู้ (Knowledge)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>เข้าใจกระบวนการทำงานและโครงสร้างการทำงานของสถานประกอบการ</li>
+                    <li>รู้จักแนวทางการวางแผนงาน การจัดการเวลา และการบริหารทรัพยากรในการทำงาน</li>
+                    <li>เข้าใจบทบาทหน้าที่และความคาดหวังของบุคลากรในวิชาชีพ</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-emerald-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="zap" class="w-4 h-4"></i>
+                    <span>ด้านทักษะ (Skills)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>วางแผนการทำงานและบริหารเวลาได้อย่างเหมาะสม</li>
+                    <li>ทำงานร่วมกับผู้อื่นและสื่อสารได้อย่างมีประสิทธิภาพ</li>
+                    <li>ปรับตัวเข้ากับสภาพแวดล้อมการทำงานจริงและการเปลี่ยนแปลงขององค์กร</li>
+                    <li>สามารถปฏิบัติงานได้ทั้งแบบออนไซต์ (On-site) และออนไลน์ (Remote)</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-purple-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>ด้านจริยธรรม (Ethics)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>ใช้ความรู้ด้านคอมพิวเตอร์อย่างมีความรับผิดชอบ ไม่ละเมิดทรัพย์สินทางปัญญา</li>
+                    <li>ตระหนักถึงผลกระทบของการพัฒนาโปรแกรมต่อผู้ใช้และสังคม</li>
+                    <li>มีความซื่อสัตย์ทางวิชาการและในการทำงานด้านซอฟต์แวร์</li>
+                    <li>เคารพกฎระเบียบและวัฒนธรรมองค์กร</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                  <div class="flex items-center gap-1.5 text-amber-400 font-bold text-xs border-b border-slate-800 pb-2">
+                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                    <span>ด้านลักษณะบุคคล (Attributes)</span>
+                  </div>
+                  <ul class="space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>มีความใฝ่รู้และพร้อมพัฒนาตนเองด้านวิทยาการคอมพิวเตอร์อย่างต่อเนื่อง</li>
+                    <li>ทำงานร่วมกับผู้อื่นได้ดี มีทัศนคติที่ดีต่อการเรียนรู้และการแก้ปัญหา</li>
+                    <li>มีความรอบคอบ ละเอียดถี่ถ้วน และใส่ใจคุณภาพของงานระดับมืออาชีพ</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- รายวิชาที่รองรับ -->
+              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-wrap items-center gap-2 text-xs">
+                <span class="font-bold text-amber-400 shrink-0">📚 รายวิชาที่รองรับ:</span>
+                <span class="px-2.5 py-1 rounded-lg bg-amber-950/60 border border-amber-800/40 text-amber-300">06-11-403 การฝึกงานด้านวิชาชีพคอมพิวเตอร์</span>
+                <span class="px-2.5 py-1 rounded-lg bg-amber-950/60 border border-amber-800/40 text-amber-300">06-11-404 สหกิจศึกษา 1 (ชั้นปีที่ 4)</span>
+                <span class="px-2.5 py-1 rounded-lg bg-amber-950/60 border border-amber-800/40 text-amber-300">06-11-406 สหกิจศึกษา 2 (ชั้นปีที่ 4)</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= YLO / ผลลัพธ์การเรียนรู้รายชั้นปี ================= -->
+  <section id="ylo" class="py-20 bg-slate-950 border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-3 mb-16">
+        <span class="text-xs font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-800/60 px-3.5 py-1 rounded-full">
+          Year Learning Outcomes (YLOs)
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">เรียนจบแต่ละปี คุณจะทำอะไรได้บ้าง?</h2>
+        <p class="text-slate-400 text-sm sm:text-base">
+          เป้าหมายที่ชัดเจนในแต่ละชั้นปี เพื่อการันตีว่าบัณฑิตทุกคนพร้อมทำงานได้ทันทีเมื่อสำเร็จการศึกษา
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
+          <div class="absolute -top-3 -right-3 text-5xl font-black code-font text-slate-800/40 select-none group-hover:text-cyan-500/20 transition-colors">01</div>
+          <span class="px-2.5 py-1 rounded bg-blue-500/10 text-cyan-400 text-xs font-bold code-font">ชั้นปีที่ 1</span>
+          <h3 class="text-lg font-bold text-white mt-3 mb-2">เขียนโปรแกรม & สื่อสารได้</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            เขียนโปรแกรมพื้นฐานได้ อธิบายโครงสร้างพื้นฐานของระบบคอมพิวเตอร์ และสื่อสารได้อย่างเหมาะสม มีจริยธรรมและความรับผิดชอบ
+          </p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
+          <div class="absolute -top-3 -right-3 text-5xl font-black code-font text-slate-800/40 select-none group-hover:text-emerald-500/20 transition-colors">02</div>
+          <span class="px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 text-xs font-bold code-font">ชั้นปีที่ 2</span>
+          <h3 class="text-lg font-bold text-white mt-3 mb-2">วิเคราะห์ & พัฒนาระบบ</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            สามารถนำความรู้ทั้งด้านฐานข้อมูล โครงสร้างข้อมูล และ AI มาใช้ประกอบการวิเคราะห์และออกแบบระบบงานได้จริง
+          </p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
+          <div class="absolute -top-3 -right-3 text-5xl font-black code-font text-slate-800/40 select-none group-hover:text-purple-500/20 transition-colors">03</div>
+          <span class="px-2.5 py-1 rounded bg-purple-500/10 text-purple-400 text-xs font-bold code-font">ชั้นปีที่ 3</span>
+          <h3 class="text-lg font-bold text-white mt-3 mb-2">บูรณาการ & ใช้ภาษาอังกฤษ</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            บูรณาการความรู้ด้านความมั่นคงปลอดภัยและวิศวกรรมซอฟต์แวร์เพื่อแก้ปัญหา มีทักษะภาษาอังกฤษที่พร้อมสำหรับการทำงาน
+          </p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
+          <div class="absolute -top-3 -right-3 text-5xl font-black code-font text-slate-800/40 select-none group-hover:text-amber-500/20 transition-colors">04</div>
+          <span class="px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 text-xs font-bold code-font">ชั้นปีที่ 4</span>
+          <h3 class="text-lg font-bold text-white mt-3 mb-2">พร้อมทำงานในสถานประกอบการ</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            เขียนและพัฒนาระบบในสถานประกอบการจริง หรือหน่วยงานวิชาชีพคอมพิวเตอร์ได้อย่างมีประสิทธิภาพระดับมืออาชีพ
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= CAREER PATHWAYS / จบแล้วทำงานอะไร ================= -->
+  <section id="careers" class="py-20 bg-[#070d19] border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-3 mb-16">
+        <span class="text-xs font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-800/60 px-3.5 py-1 rounded-full">
+          Career Opportunities
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">จบวิทยาการคอมพิวเตอร์ ทำงานอะไรได้บ้าง?</h2>
+        <p class="text-slate-400 text-sm sm:text-base">
+          ตลาดแรงงานมีความต้องการบุคลากรสายเทคสูงมาก สามารถทำงานได้ทั้งภาครัฐ เอกชน และธุรกิจส่วนตัว
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <div class="glass-card glass-card-hover p-6 rounded-2xl">
+          <div class="w-12 h-12 rounded-xl bg-blue-600/20 text-cyan-400 flex items-center justify-center mb-4">
+            <i data-lucide="code-2" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-white text-lg mb-1">นักพัฒนาและออกแบบระบบ</h3>
+          <p class="text-xs text-cyan-400 code-font mb-2">Programmer / System Analyst</p>
+          <p class="text-slate-400 text-xs leading-relaxed">เขียนโปรแกรม ออกแบบสถาปัตยกรรมซอฟต์แวร์ และพัฒนาโซลูชันตามความต้องการองค์กร</p>
+        </div>
+
+        <div class="glass-card glass-card-hover p-6 rounded-2xl">
+          <div class="w-12 h-12 rounded-xl bg-cyan-600/20 text-cyan-400 flex items-center justify-center mb-4">
+            <i data-lucide="globe" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-white text-lg mb-1">นักพัฒนาเว็บไซต์ & แอป</h3>
+          <p class="text-xs text-cyan-400 code-font mb-2">Web / Mobile Developer</p>
+          <p class="text-slate-400 text-xs leading-relaxed">สร้างเว็บแอปพลิเคชันและโมบายแอปพลิเคชันยุคใหม่ ทั้งฝั่ง Frontend และ Backend</p>
+        </div>
+
+        <div class="glass-card glass-card-hover p-6 rounded-2xl">
+          <div class="w-12 h-12 rounded-xl bg-purple-600/20 text-purple-400 flex items-center justify-center mb-4">
+            <i data-lucide="database" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-white text-lg mb-1">ผู้ดูแลระบบ & ฐานข้อมูล</h3>
+          <p class="text-xs text-purple-400 code-font mb-2">Network / Database Admin</p>
+          <p class="text-slate-400 text-xs leading-relaxed">ดูแลความเสถียรของระบบเครือข่าย เซิร์ฟเวอร์ ฐานข้อมูล และความปลอดภัยข้อมูล</p>
+        </div>
+
+        <div class="glass-card glass-card-hover p-6 rounded-2xl">
+          <div class="w-12 h-12 rounded-xl bg-emerald-600/20 text-emerald-400 flex items-center justify-center mb-4">
+            <i data-lucide="bar-chart-2" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-white text-lg mb-1">นักวิเคราะห์ข้อมูล & AI</h3>
+          <p class="text-xs text-emerald-400 code-font mb-2">Data Analyst / AI Specialist</p>
+          <p class="text-slate-400 text-xs leading-relaxed">นำข้อมูลขนาดใหญ่มาวิเคราะห์ สร้างแบบจำลอง Machine Learning เพื่อขับเคลื่อนธุรกิจ</p>
+        </div>
+
+        <div class="glass-card glass-card-hover p-6 rounded-2xl">
+          <div class="w-12 h-12 rounded-xl bg-amber-600/20 text-amber-400 flex items-center justify-center mb-4">
+            <i data-lucide="shield-alert" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-white text-lg mb-1">นักทดสอบระบบ (QA / Tester)</h3>
+          <p class="text-xs text-amber-400 code-font mb-2">Software QA & Test Engineer</p>
+          <p class="text-slate-400 text-xs leading-relaxed">ตรวจสอบความถูกต้อง ประสิทธิภาพ และค้นหาจุดบกพร่องก่อนส่งมอบซอฟต์แวร์</p>
+        </div>
+
+        <div class="glass-card glass-card-hover p-6 rounded-2xl">
+          <div class="w-12 h-12 rounded-xl bg-sky-600/20 text-sky-400 flex items-center justify-center mb-4">
+            <i data-lucide="microscope" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-white text-lg mb-1">นักวิทยาศาสตร์คอมพิวเตอร์</h3>
+          <p class="text-xs text-sky-400 code-font mb-2">Computer Scientist / Researcher</p>
+          <p class="text-slate-400 text-xs leading-relaxed">วิจัยและพัฒนานวัตกรรม อัลกอริทึมใหม่ ๆ ในสถาบันวิจัย องค์กรนวัตกรรม หรือศึกษาต่อ</p>
+        </div>
+
+        <div class="glass-card glass-card-hover p-6 rounded-2xl">
+          <div class="w-12 h-12 rounded-xl bg-rose-600/20 text-rose-400 flex items-center justify-center mb-4">
+            <i data-lucide="headphones" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-white text-lg mb-1">ฝ่ายสนับสนุนด้านสารสนเทศ</h3>
+          <p class="text-xs text-rose-400 code-font mb-2">IT Support & Specialist</p>
+          <p class="text-slate-400 text-xs leading-relaxed">แก้ไขปัญหาด้านฮาร์ดแวร์ ซอฟต์แวร์ และสนับสนุนการดำเนินงานด้านไอทีในองค์กร</p>
+        </div>
+
+        <div class="glass-card glass-card-hover p-6 rounded-2xl">
+          <div class="w-12 h-12 rounded-xl bg-yellow-600/20 text-yellow-400 flex items-center justify-center mb-4">
+            <i data-lucide="rocket" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-white text-lg mb-1">ผู้ประกอบการด้านคอมพิวเตอร์</h3>
+          <p class="text-xs text-yellow-400 code-font mb-2">Tech Startup / Freelancer</p>
+          <p class="text-slate-400 text-xs leading-relaxed">ก่อตั้งธุรกิจสตาร์ทอัพ พัฒนาผลิตภัณฑ์ไอทีของตนเอง หรือรับงานฟรีแลนซ์ระดับสากล</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= ADMISSION / คุณสมบัติของผู้เข้าศึกษา ================= -->
+  <section id="admission" class="py-20 bg-slate-950 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-3 mb-16">
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-3.5 py-1 rounded-full">
+          Admission Criteria
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">คุณสมบัติของผู้เข้าศึกษา (ใครสมัครได้บ้าง?)</h2>
+        <p class="text-slate-400 text-sm sm:text-base">
+          เปิดรับผู้สมัครทั้งนักเรียนไทยและนักศึกษาต่างชาติที่สื่อสารภาษาไทยได้ พร้อมโอกาสเทียบโอนหลากหลายรูปแบบ
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Condition 1 -->
+        <div class="glass-card p-6 rounded-2xl border-t-4 border-t-cyan-500 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-400 font-bold text-xs flex items-center justify-center code-font">01</span>
+              <h3 class="font-bold text-white text-base">ม.6 (ทุกแผนการเรียน)</h3>
+            </div>
+            <p class="text-slate-300 text-sm leading-relaxed">
+              ผู้สำเร็จการศึกษาระดับมัธยมศึกษาตอนปลาย <strong>ทุกแผนการเรียน</strong> (วิทย์-คณิต, ศิลป์-คำนวณ, ศิลป์-ภาษา หรือเทียบเท่า) ผ่านการคัดเลือกตามเกณฑ์ อว. / มหาวิทยาลัย
+            </p>
+          </div>
+          <span class="mt-4 inline-block text-xs text-cyan-400 bg-cyan-950/50 px-2.5 py-1 rounded w-fit">เปิดกว้างทุกสายการเรียน</span>
+        </div>
+
+        <!-- Condition 2 -->
+        <div class="glass-card p-6 rounded-2xl border-t-4 border-t-blue-500 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-7 h-7 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xs flex items-center justify-center code-font">02</span>
+              <h3 class="font-bold text-white text-base">ปวช. (ทุกสาขาวิชา)</h3>
+            </div>
+            <p class="text-slate-300 text-sm leading-relaxed">
+              ผู้สำเร็จการศึกษาระดับประกาศนียบัตรวิชาชีพ <strong>(ปวช.) ทุกสาขาวิชา</strong> เช่น คอมพิวเตอร์ธุรกิจ, ช่างไฟฟ้า, บัญชี ฯลฯ ที่ผ่านการคัดเลือกตามระเบียบ
+            </p>
+          </div>
+          <span class="mt-4 inline-block text-xs text-blue-400 bg-blue-950/50 px-2.5 py-1 rounded w-fit">สายอาชีพต่อยอดได้ทันที</span>
+        </div>
+
+        <!-- Condition 3 -->
+        <div class="glass-card p-6 rounded-2xl border-t-4 border-t-purple-500 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-7 h-7 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xs flex items-center justify-center code-font">03</span>
+              <h3 class="font-bold text-white text-base">ปวส. / อนุปริญญา</h3>
+            </div>
+            <p class="text-slate-300 text-sm leading-relaxed">
+              ผู้สำเร็จการศึกษาระดับ <strong>ปวส. หรืออนุปริญญา ทุกสาขาวิชา</strong> สามารถสมัครและเทียบโอนรายวิชาตามเกณฑ์ที่มหาวิทยาลัยกำหนด เรียนจบได้ไวยิ่งขึ้น
+            </p>
+          </div>
+          <span class="mt-4 inline-block text-xs text-purple-400 bg-purple-950/50 px-2.5 py-1 rounded w-fit">เทียบโอนจบไว</span>
+        </div>
+
+        <!-- Condition 4 -->
+        <div class="glass-card p-6 rounded-2xl border-t-4 border-t-emerald-500 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xs flex items-center justify-center code-font">04</span>
+              <h3 class="font-bold text-white text-base">เทียบโอน & คลังหน่วยกิต</h3>
+            </div>
+            <p class="text-slate-300 text-sm leading-relaxed">
+              ผู้เทียบโอนผลการเรียน ผู้มีประสบการณ์ทำงาน หรือผู้สะสมหน่วยกิตจาก <strong>ระบบคลังหน่วยกิต (Credit Bank)</strong> นำมาลดระยะเวลาเรียนได้
+            </p>
+          </div>
+          <span class="mt-4 inline-block text-xs text-emerald-400 bg-emerald-950/50 px-2.5 py-1 rounded w-fit">ยืดหยุ่นสำหรับวัยทำงาน</span>
+        </div>
+
+      </div>
+
+      <!-- Campus Life & Location Highlight -->
+      <div class="mt-12 glass-card rounded-3xl p-8 border border-slate-800 grid lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-8 space-y-4">
+          <div class="flex items-center gap-2 text-cyan-400 text-sm font-semibold">
+            <i data-lucide="map-pin" class="w-4 h-4"></i>
+            <span>สถานที่จัดการเรียนการสอน: มทร.ตะวันออก เขตพื้นที่บางพระ ชลบุรี</span>
+          </div>
+          <h3 class="text-2xl sm:text-3xl font-bold text-white">ใช้ชีวิตในแคมปัสธรรมชาติ ติดทะเลบางพระและภูเขา</h3>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            วิทยาเขตบางพระมีสภาพแวดล้อมที่ร่มรื่น ติดอ่างเก็บน้ำบางพระและมองเห็นวิวทะเล บรรยากาศเงียบสงบเหมาะแก่การอ่านหนังสือและโฟกัสกับการเขียนโปรแกรม เดินทางสะดวก ใกล้เมืองชลบุรี ศรีราชา และบางแสน พร้อมหอพักนักศึกษาและสิ่งอำนวยความสะดวกครบครัน
+          </p>
+          <div class="flex flex-wrap gap-4 pt-2 text-xs text-slate-300">
+            <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> มีหอพักภายในมหาวิทยาลัย</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> กองทุน กยศ. / กรอ.</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> โรงอาหารและสนามกีฬา</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> ทุนการศึกษาหลากหลายประเภท</span>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 bg-gradient-to-tr from-cyan-600/30 to-blue-600/30 p-6 rounded-2xl border border-cyan-500/30 text-center space-y-3">
+          <i data-lucide="compass" class="w-10 h-10 text-cyan-400 mx-auto"></i>
+          <h4 class="font-bold text-white text-lg">คณะวิทยาศาสตร์และเทคโนโลยี</h4>
+          <p class="text-xs text-slate-300">มหาวิทยาลัยเทคโนโลยีราชมงคลตะวันออก 43 หมู่ 6 ต.บางพระ อ.ศรีราชา จ.ชลบุรี 20110</p>
+          <a href="https://goo.gl/maps" target="_blank" class="inline-flex items-center gap-1.5 text-xs text-cyan-300 hover:text-white underline pt-1 font-semibold">
+            <span>เปิด Google Maps ดูพิกัด</span>
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Online Admission Callout Box -->
+      <div class="mt-8 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-blue-900/80 via-indigo-900/80 to-cyan-900/80 border border-cyan-500/40 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+        <div class="space-y-2">
+          <span class="text-xs font-bold uppercase tracking-wider text-cyan-300 bg-white/10 px-3 py-1 rounded-full">Official Admission Link</span>
+          <h3 class="text-2xl font-extrabold text-white">พร้อมก้าวสู่อนาคตสายเทคแล้วหรือยัง?</h3>
+          <p class="text-slate-300 text-sm max-w-xl">
+            สมัครเข้าศึกษาต่อในหลักสูตรวิทยาการคอมพิวเตอร์ มทร.ตะวันออก ผ่านระบบรับสมัครออนไลน์ของมหาวิทยาลัยได้โดยตรง
+          </p>
+        </div>
+        <a href="https://academic.rmutto.ac.th/?page_id=706" target="_blank" rel="noopener noreferrer" class="shrink-0 inline-flex items-center gap-2 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-extrabold px-8 py-4 rounded-xl shadow-xl shadow-cyan-500/25 transition-all transform hover:-translate-y-0.5 text-base">
+          <span>เข้าสู่ระบบรับสมัครออนไลน์</span>
+          <i data-lucide="external-link" class="w-5 h-5"></i>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= ADMISSION CALENDAR SECTION (ACADEMIC YEAR 2570 / TCAS 70) ================= -->
+  <section id="calendar" class="py-20 bg-[#060b14] border-t border-slate-800 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto space-y-3 mb-12">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 via-purple-500/10 to-cyan-500/10 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-bold backdrop-blur-sm">
+          <i data-lucide="calendar-check-2" class="w-4 h-4 text-amber-400"></i>
+          <span>ปฏิทินรับสมัครนักศึกษาใหม่ ประจำปีการศึกษา 2570</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">กำหนดการรับสมัครนักศึกษาใหม่ ปีการศึกษา 2570 (TCAS 70)</h2>
+        <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+          เลือกวุฒิการศึกษาของคุณเพื่อตรวจสอบกำหนดการรับสมัคร ขั้นตอนการยืนยันสิทธิ์ และการชำระเงิน
+        </p>
+      </div>
+
+      <!-- Qualification Switcher Tabs (2 Tabs) -->
+      <div class="max-w-2xl mx-auto mb-10">
+        <div class="bg-slate-900/90 p-2 rounded-2xl border border-slate-800 grid grid-cols-2 gap-2 shadow-xl">
+          <button onclick="setCalQual('m6')" id="btn-qual-m6" class="cal-qual-btn py-3.5 px-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-lg shadow-purple-500/25 transition-all">
+            <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+            <span>วุฒิ ม.6 (TCAS 70)</span>
+          </button>
+          <button onclick="setCalQual('voc')" id="btn-qual-voc" class="cal-qual-btn py-3.5 px-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 bg-slate-800/80 text-slate-400 hover:text-white border border-slate-700/60 transition-all">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+            <span>วุฒิ ปวช. และ ปวส. (เทียบโอน)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Current Selected Banner Indicator -->
+      <div id="cal-selected-badge" class="text-center mb-8">
+        <span class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold px-4 py-2 rounded-full bg-slate-800/80 border border-slate-700 text-cyan-300">
+          <i data-lucide="info" class="w-4 h-4 text-cyan-400"></i>
+          <span id="cal-badge-text">กำลังแสดง: ปฏิทินรับสมัคร ปีการศึกษา 2570 สำหรับผู้สำเร็จการศึกษาวุฒิ ม.6 (TCAS 70)</span>
+        </span>
+      </div>
+
+      <!-- ================= 2570 CALENDAR TABLES ================= -->
+      <div id="calendar-tables-wrapper" class="glass-card rounded-3xl border border-slate-800 overflow-hidden shadow-2xl">
+        
+        <!-- TABLE 1: 2570 - ม.6 (TCAS 70) -->
+        <div id="cal-table-2570-m6" class="cal-table-pane">
+          <div class="p-6 bg-slate-900/90 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">
+                <i data-lucide="calendar" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="text-base sm:text-lg font-bold text-white">ปฏิทินรับสมัครนักศึกษา ประจำปีการศึกษา 2570 (TCAS 70)</h3>
+                <p class="text-xs text-purple-300">สำหรับผู้สำเร็จการศึกษามัธยมศึกษาปีที่ 6 (ม.6)</p>
+              </div>
+            </div>
+            <a href="https://academic.rmutto.ac.th/?page_id=706" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition">
+              <span>สมัครออนไลน์</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs sm:text-sm text-slate-300 border-collapse min-w-[760px]">
+              <thead>
+                <tr class="bg-slate-900/90 text-slate-200 border-b border-slate-800 text-xs uppercase tracking-wider font-bold">
+                  <th class="p-4 sm:p-5 w-[32%]">รายการ / กระบวนการ</th>
+                  <th class="p-4 sm:p-5 text-emerald-400 w-[17%] bg-emerald-950/20 border-x border-slate-800">รอบ 1 Portfolio</th>
+                  <th class="p-4 sm:p-5 text-sky-400 w-[17%] bg-sky-950/20 border-r border-slate-800">รอบ 2 Quota</th>
+                  <th class="p-4 sm:p-5 text-purple-400 w-[17%] bg-purple-950/20 border-r border-slate-800">รอบ 3 Admission</th>
+                  <th class="p-4 sm:p-5 text-rose-400 w-[17%] bg-rose-950/20">รอบ 4 Direct Admission</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800/80">
+                <tr class="hover:bg-slate-800/30">
+                  <td class="p-4 sm:p-5 font-semibold text-white">1. สมัครทางอินเทอร์เน็ต (ระบบรับสมัครมหาวิทยาลัย)</td>
+                  <td class="p-4 sm:p-5 font-bold text-emerald-300 bg-emerald-950/10 border-x border-slate-800">15 ส.ค. 2569 - 10 ก.พ. 2570</td>
+                  <td class="p-4 sm:p-5 font-bold text-sky-300 bg-sky-950/10 border-r border-slate-800">12 มี.ค. - 16 เม.ย. 2570</td>
+                  <td class="p-4 sm:p-5 font-bold text-purple-300 bg-purple-950/10 border-r border-slate-800">สมัครผ่านระบบ TCAS (7-11 พ.ค. 2570)</td>
+                  <td class="p-4 sm:p-5 font-bold text-rose-300 bg-rose-950/10">29 พ.ค. - 5 มิ.ย. 2570</td>
+                </tr>
+                <tr class="hover:bg-slate-800/30">
+                  <td class="p-4 sm:p-5 text-slate-200">2. ประกาศรายชื่อผู้มีสิทธิ์เข้ารับการคัดเลือก/สัมภาษณ์</td>
+                  <td class="p-4 sm:p-5 bg-emerald-950/10 border-x border-slate-800">16 ก.พ. 2570</td>
+                  <td class="p-4 sm:p-5 bg-sky-950/10 border-r border-slate-800">20 เม.ย. 2570</td>
+                  <td class="p-4 sm:p-5 bg-purple-950/10 border-r border-slate-800">1 มิ.ย. 2570</td>
+                  <td class="p-4 sm:p-5 bg-rose-950/10">8 มิ.ย. 2570</td>
+                </tr>
+                <tr class="hover:bg-slate-800/30">
+                  <td class="p-4 sm:p-5 font-medium text-white">3. คัดเลือก (สอบข้อเขียน/สัมภาษณ์)</td>
+                  <td class="p-4 sm:p-5 font-bold text-emerald-400 bg-emerald-950/10 border-x border-slate-800">20 ก.พ. 2570</td>
+                  <td class="p-4 sm:p-5 font-bold text-sky-400 bg-sky-950/10 border-r border-slate-800">24 เม.ย. 2570</td>
+                  <td class="p-4 sm:p-5 font-bold text-purple-400 bg-purple-950/10 border-r border-slate-800">5 มิ.ย. 2570</td>
+                  <td class="p-4 sm:p-5 font-bold text-rose-400 bg-rose-950/10">12 มิ.ย. 2570</td>
+                </tr>
+                <tr class="hover:bg-slate-800/30">
+                  <td class="p-4 sm:p-5 text-slate-200">4. ประกาศรายชื่อผู้ผ่านการคัดเลือกเพื่อยืนยันสิทธิ์ TCAS</td>
+                  <td class="p-4 sm:p-5 bg-emerald-950/10 border-x border-slate-800">26 ก.พ. 2570</td>
+                  <td class="p-4 sm:p-5 bg-sky-950/10 border-r border-slate-800">28 เม.ย. 2570</td>
+                  <td class="p-4 sm:p-5 text-slate-400 bg-purple-950/10 border-r border-slate-800">ไม่มีประกาศ (สมัครผ่าน TCAS)</td>
+                  <td class="p-4 sm:p-5 bg-rose-950/10">15 มิ.ย. 2570</td>
+                </tr>
+                <tr class="hover:bg-slate-800/30">
+                  <td class="p-4 sm:p-5 text-slate-200">5. ทปอ. ประกาศรายชื่อผู้ผ่านการคัดเลือกเพื่อยืนยันสิทธิ์</td>
+                  <td class="p-4 sm:p-5 bg-emerald-950/10 border-x border-slate-800">10 มี.ค. 2570</td>
+                  <td class="p-4 sm:p-5 bg-sky-950/10 border-r border-slate-800">3 พ.ค. 2570</td>
+                  <td class="p-4 sm:p-5 bg-purple-950/10 border-r border-slate-800">ครั้งที่ 1: 22 พ.ค. 70<br>ครั้งที่ 2: 27 พ.ค. 70</td>
+                  <td class="p-4 sm:p-5 bg-rose-950/10">18 มิ.ย. 2570</td>
+                </tr>
+                <tr class="hover:bg-slate-800/30 bg-cyan-950/10">
+                  <td class="p-4 sm:p-5 font-bold text-white">6. ผู้ผ่านการคัดเลือกยืนยันสิทธิ์ในระบบ TCAS (ทปอ.)</td>
+                  <td class="p-4 sm:p-5 font-bold text-emerald-300 bg-emerald-950/20 border-x border-slate-800">10 - 11 มี.ค. 2570</td>
+                  <td class="p-4 sm:p-5 font-bold text-sky-300 bg-sky-950/20 border-r border-slate-800">3 - 4 พ.ค. 2570</td>
+                  <td class="p-4 sm:p-5 font-bold text-purple-300 bg-purple-950/20 border-r border-slate-800">ครั้งที่ 1: 22-23 พ.ค. 70<br>ครั้งที่ 2: อัตโนมัติ</td>
+                  <td class="p-4 sm:p-5 font-bold text-rose-300 bg-rose-950/20">18 - 19 มิ.ย. 2570</td>
+                </tr>
+                <tr class="hover:bg-slate-800/30">
+                  <td class="p-4 sm:p-5 text-slate-300">7. สละสิทธิ์ในระบบ TCAS (สำหรับผู้ที่ได้ยืนยันสิทธิ์)</td>
+                  <td class="p-4 sm:p-5 bg-emerald-950/10 border-x border-slate-800">12 มี.ค. 2570</td>
+                  <td class="p-4 sm:p-5 bg-sky-950/10 border-r border-slate-800">5 พ.ค. 2570</td>
+                  <td class="p-4 sm:p-5 bg-purple-950/10 border-r border-slate-800">28 พ.ค. 2570</td>
+                  <td class="p-4 sm:p-5 text-rose-400 font-semibold bg-rose-950/10">ไม่อนุญาตให้สละสิทธิ์</td>
+                </tr>
+                <tr class="hover:bg-slate-800/30">
+                  <td class="p-4 sm:p-5 text-slate-200">8. ประกาศรายชื่อผู้มีสิทธิ์ยืนยันสิทธิ์เข้าศึกษาต่อของมหาวิทยาลัย</td>
+                  <td class="p-4 sm:p-5 bg-emerald-950/10 border-x border-slate-800">16 มี.ค. 2570</td>
+                  <td class="p-4 sm:p-5 bg-sky-950/10 border-r border-slate-800">7 พ.ค. 2570</td>
+                  <td class="p-4 sm:p-5 bg-purple-950/10 border-r border-slate-800">9 มิ.ย. 2570</td>
+                  <td class="p-4 sm:p-5 bg-rose-950/10">21 มิ.ย. 2570</td>
+                </tr>
+                <tr class="hover:bg-slate-800/30 bg-slate-900/40">
+                  <td class="p-4 sm:p-5 font-bold text-white">9. ยืนยันสิทธิ์ในระบบรับสมัคร มทร. และชำระค่าธรรมเนียม</td>
+                  <td class="p-4 sm:p-5 font-bold text-emerald-400 bg-emerald-950/20 border-x border-slate-800">16 - 22 มี.ค. 2570</td>
+                  <td class="p-4 sm:p-5 font-bold text-sky-400 bg-sky-950/20 border-r border-slate-800">7 - 17 พ.ค. 2570</td>
+                  <td class="p-4 sm:p-5 font-bold text-purple-400 bg-purple-950/20 border-r border-slate-800">9 - 15 มิ.ย. 2570</td>
+                  <td class="p-4 sm:p-5 font-bold text-rose-400 bg-rose-950/20">21 - 23 มิ.ย. 2570</td>
+                </tr>
+                <tr class="hover:bg-slate-800/30 font-bold">
+                  <td class="p-4 sm:p-5 text-cyan-300">10. มหาวิทยาลัยประกาศรายชื่อผู้มีสิทธิ์เข้าศึกษาต่อ (Final)</td>
+                  <td class="p-4 sm:p-5 text-emerald-400 bg-emerald-950/10 border-x border-slate-800">31 มี.ค. 2570</td>
+                  <td class="p-4 sm:p-5 text-sky-400 bg-sky-950/10 border-r border-slate-800">25 พ.ค. 2570</td>
+                  <td class="p-4 sm:p-5 text-purple-400 bg-purple-950/10 border-r border-slate-800">18 มิ.ย. 2570</td>
+                  <td class="p-4 sm:p-5 text-rose-400 bg-rose-950/10">25 มิ.ย. 2570</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TABLE 2: 2570 - ปวช./ปวส. -->
+        <div id="cal-table-2570-voc" class="cal-table-pane hidden">
+          <div class="p-6 bg-slate-900/90 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold">
+                <i data-lucide="wrench" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="text-base sm:text-lg font-bold text-white">ปฏิทินรับสมัครนักศึกษา ประจำปีการศึกษา 2570</h3>
+                <p class="text-xs text-cyan-300">สำหรับผู้สำเร็จการศึกษา ปวช. และ ปวส.</p>
+              </div>
+            </div>
+            <a href="https://academic.rmutto.ac.th/?page_id=706" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition">
+              <span>สมัครออนไลน์</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs sm:text-sm text-slate-300 border-collapse min-w-[760px]">
+              <thead>
+                <tr class="bg-slate-900/90 text-slate-200 border-b border-slate-800 text-xs uppercase tracking-wider font-bold">
+                  <th class="p-4 sm:p-5 w-[28%]">รายการ / กระบวนการ</th>
+                  <th class="p-4 sm:p-5 text-rose-400 w-[14.4%] bg-rose-950/20 border-x border-slate-800">โควตา</th>
+                  <th class="p-4 sm:p-5 text-amber-400 w-[14.4%] bg-amber-950/20 border-r border-slate-800">รอบ 1</th>
+                  <th class="p-4 sm:p-5 text-emerald-400 w-[14.4%] bg-emerald-950/20 border-r border-slate-800">รอบ 2</th>
+                  <th class="p-4 sm:p-5 text-sky-400 w-[14.4%] bg-sky-950/20 border-r border-slate-800">รอบ 3</th>
+                  <th class="p-4 sm:p-5 text-purple-400 w-[14.4%] bg-purple-950/20">รอบ 4</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800/80">
+                <tr class="hover:bg-slate-800/30">
+                  <td class="p-4 sm:p-5 font-semibold text-white">1. สมัครทางอินเทอร์เน็ต (ระบบมหาวิทยาลัย)</td>
+                  <td class="p-4 sm:p-5 font-bold text-rose-300 bg-rose-950/10 border-x border-slate-800">15 ส.ค. - 30 ก.ย. 69</td>
+                  <td class="p-4 sm:p-5 font-bold text-amber-300 bg-amber-950/10 border-r border-slate-800">5 ต.ค. - 15 พ.ย. 69</td>
+                  <td class="p-4 sm:p-5 font-bold text-emerald-300 bg-emerald-950/10 border-r border-slate-800">18 พ.ย. 69 - 15 ม.ค. 70</td>
+                  <td class="p-4 sm:p-5 font-bold text-sky-300 bg-sky-950/10 border-r border-slate-800">19 ม.ค. - 12 มี.ค. 70</td>
+                  <td class="p-4 sm:p-5 font-bold text-purple-300 bg-purple-950/10">16 มี.ค. - 20 พ.ค. 70</td>
+                </tr>
+                <tr class="hover:bg-slate-800/30">
+                  <td class="p-4 sm:p-5 text-slate-200">2. ประกาศรายชื่อผู้มีสิทธิ์คัดเลือก/สัมภาษณ์</td>
+                  <td class="p-4 sm:p-5 bg-rose-950/10 border-x border-slate-800">6 ต.ค. 2569</td>
+                  <td class="p-4 sm:p-5 bg-amber-950/10 border-r border-slate-800">17 พ.ย. 2569</td>
+                  <td class="p-4 sm:p-5 bg-emerald-950/10 border-r border-slate-800">19 ม.ค. 2570</td>
+                  <td class="p-4 sm:p-5 bg-sky-950/10 border-r border-slate-800">16 มี.ค. 2570</td>
+                  <td class="p-4 sm:p-5 bg-purple-950/10">25 พ.ค. 2570</td>
+                </tr>
+                <tr class="hover:bg-slate-800/30">
+                  <td class="p-4 sm:p-5 font-medium text-white">3. คัดเลือก (สอบข้อเขียน/สัมภาษณ์)</td>
+                  <td class="p-4 sm:p-5 font-bold text-rose-400 bg-rose-950/10 border-x border-slate-800">10 ต.ค. 2569</td>
+                  <td class="p-4 sm:p-5 font-bold text-amber-400 bg-amber-950/10 border-r border-slate-800">21 พ.ย. 2569</td>
+                  <td class="p-4 sm:p-5 font-bold text-emerald-400 bg-emerald-950/10 border-r border-slate-800">23 ม.ค. 2570</td>
+                  <td class="p-4 sm:p-5 font-bold text-sky-400 bg-sky-950/10 border-r border-slate-800">20 มี.ค. 2570</td>
+                  <td class="p-4 sm:p-5 font-bold text-purple-400 bg-purple-950/10">29 พ.ค. 2570</td>
+                </tr>
+                <tr class="hover:bg-slate-800/30">
+                  <td class="p-4 sm:p-5 text-slate-200">4. ประกาศรายชื่อผู้ผ่านการคัดเลือกเพื่อยืนยันสิทธิ์</td>
+                  <td class="p-4 sm:p-5 bg-rose-950/10 border-x border-slate-800">15 ต.ค. 2569</td>
+                  <td class="p-4 sm:p-5 bg-amber-950/10 border-r border-slate-800">27 พ.ย. 2569</td>
+                  <td class="p-4 sm:p-5 bg-emerald-950/10 border-r border-slate-800">28 ม.ค. 2570</td>
+                  <td class="p-4 sm:p-5 bg-sky-950/10 border-r border-slate-800">24 มี.ค. 2570</td>
+                  <td class="p-4 sm:p-5 bg-purple-950/10">1 มิ.ย. 2570</td>
+                </tr>
+                <tr class="hover:bg-slate-800/30 bg-cyan-950/10">
+                  <td class="p-4 sm:p-5 font-bold text-white">5. ยืนยันสิทธิ์ในระบบรับสมัคร และชำระค่าธรรมเนียม</td>
+                  <td class="p-4 sm:p-5 font-bold text-rose-300 bg-rose-950/20 border-x border-slate-800">15 - 20 ต.ค. 69</td>
+                  <td class="p-4 sm:p-5 font-bold text-amber-300 bg-amber-950/20 border-r border-slate-800">27 พ.ย. - 1 ธ.ค. 69</td>
+                  <td class="p-4 sm:p-5 font-bold text-emerald-300 bg-emerald-950/20 border-r border-slate-800">28 ม.ค. - 2 ก.พ. 70</td>
+                  <td class="p-4 sm:p-5 font-bold text-sky-300 bg-sky-950/20 border-r border-slate-800">24 - 29 มี.ค. 70</td>
+                  <td class="p-4 sm:p-5 font-bold text-purple-300 bg-purple-950/20">1 - 7 มิ.ย. 70</td>
+                </tr>
+                <tr class="hover:bg-slate-800/30 font-bold">
+                  <td class="p-4 sm:p-5 text-cyan-300">6. ประกาศรายชื่อผู้มีสิทธิ์เข้าศึกษา (Final)</td>
+                  <td class="p-4 sm:p-5 text-rose-400 bg-rose-950/10 border-x border-slate-800">28 ต.ค. 2569</td>
+                  <td class="p-4 sm:p-5 text-amber-400 bg-amber-950/10 border-r border-slate-800">15 ม.ค. 2570</td>
+                  <td class="p-4 sm:p-5 text-emerald-400 bg-emerald-950/10 border-r border-slate-800">5 ก.พ. 2570</td>
+                  <td class="p-4 sm:p-5 text-sky-400 bg-sky-950/10 border-r border-slate-800">1 เม.ย. 2570</td>
+                  <td class="p-4 sm:p-5 text-purple-400 bg-purple-950/10">11 มิ.ย. 2570</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Table Footer / Important Notice & Channels -->
+        <div class="p-6 bg-slate-900 border-t border-slate-800 text-xs text-slate-400 space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-slate-300">
+            <div class="flex items-center gap-2 text-amber-300">
+              <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+              <span><strong>หมายเหตุ:</strong> กำหนดการอาจเปลี่ยนแปลงตามความเหมาะสม โปรดติดตามประกาศทางการจากมหาวิทยาลัย</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span>ระบบรับสมัคร:</span>
+              <a href="https://academic.rmutto.ac.th/?page_id=706" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline font-mono">academic.rmutto.ac.th</a>
+              <span>/</span>
+              <a href="http://regis.rmutto.ac.th/registrar/apphome.asp" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline font-mono">regis.rmutto.ac.th</a>
+            </div>
+          </div>
+
+          <!-- Contact Hotline Badges -->
+          <div class="pt-3 border-t border-slate-800/80 flex flex-wrap items-center gap-4 text-[11px] text-slate-400">
+            <span class="font-bold text-white">สอบถามข้อมูลรับสมัครเพิ่มเติม:</span>
+            <span class="bg-slate-800 px-3 py-1.5 rounded-lg text-slate-300">
+              📍 <strong>เขตพื้นที่บางพระ (ส่วนกลาง):</strong> 038-358099 ต่อ 1031, 1032 หรือ 081-9821881
+            </span>
+            <span class="bg-slate-800 px-3 py-1.5 rounded-lg text-slate-300">
+              📧 <strong>E-mail:</strong> comsci_bp@rmutto.ac.th
+            </span>
+            <a href="https://www.facebook.com/ComSciBPRMUTTO/" target="_blank" rel="noopener noreferrer" class="bg-blue-950/80 text-blue-300 border border-blue-800/60 px-3 py-1.5 rounded-lg hover:underline flex items-center gap-1">
+              <i data-lucide="facebook" class="w-3.5 h-3.5"></i>
+              <span><strong>Facebook:</strong> ComSciBPRMUTTO</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= FAQ / คำถามยอดฮิตของน้อง ๆ ม.ปลาย ================= -->
+  <section id="faq" class="py-20 bg-[#09101f] border-t border-slate-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center space-y-3 mb-14">
+        <span class="text-xs font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-800/60 px-3.5 py-1 rounded-full">
+          FAQ for High School Students
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">คำถามที่น้อง ๆ ถามกันบ่อย</h2>
+        <p class="text-slate-400 text-sm">เคลียร์ทุกข้อสงสัยก่อนตัดสินใจก้าวสู่รั้ว CS บางพระ</p>
+      </div>
+
+      <div class="space-y-4">
+        
+        <div class="glass-card rounded-2xl p-6 border border-slate-800/80">
+          <h4 class="font-bold text-white text-base mb-2 flex items-center gap-2">
+            <span class="text-cyan-400 code-font">Q:</span>
+            ไม่มีพื้นฐานการเขียนโค้ดมาก่อนเลย จะเรียนไหวไหม?
+          </h4>
+          <p class="text-slate-300 text-sm leading-relaxed pl-6">
+            A: เรียนได้แน่นอนครับ! ในปี 1 เทอม 1 จะเริ่มสอนตั้งแต่พื้นฐานความคิดทางตรรกะและการเขียนโปรแกรมเบื้องต้น อาจารย์และรุ่นพี่มีระบบติวและให้คำปรึกษา ขอเพียงแค่มีความสนใจและพร้อมฝึกฝนอย่างสม่ำเสมอ
+          </p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border border-slate-800/80">
+          <h4 class="font-bold text-white text-base mb-2 flex items-center gap-2">
+            <span class="text-cyan-400 code-font">Q:</span>
+            เด็กสายศิลป์-ภาษา หรือ ศิลป์-ทั่วไป สมัครได้จริงไหม?
+          </h4>
+          <p class="text-slate-300 text-sm leading-relaxed pl-6">
+            A: สมัครได้จริงครับ! เกณฑ์หลักสูตร พ.ศ. 2569 ระบุชัดเจนว่ารับ ม.6 ทุกแผนการเรียน และ ปวช. ทุกสาขา ไม่จำกัดเฉพาะสายวิทย์-คณิต เพื่อเปิดโอกาสให้ทุกคนที่รักเทคโนโลยีได้มีพื้นที่เติบโต
+          </p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border border-slate-800/80">
+          <h4 class="font-bold text-white text-base mb-2 flex items-center gap-2">
+            <span class="text-cyan-400 code-font">Q:</span>
+            วิทยาการคอมพิวเตอร์ (CS) ต่างจาก เทคโนโลยีสารสนเทศ (IT) อย่างไร?
+          </h4>
+          <p class="text-slate-300 text-sm leading-relaxed pl-6">
+            A: วิทยาการคอมพิวเตอร์ (CS) จะเน้น “การสร้างและพัฒนา” (Building & Creating) เช่น การเขียนโปรแกรม, อัลกอริทึม, AI, โครงสร้างระบบ และวิทยาศาสตร์ข้อมูลเชิงลึก ขณะที่ IT จะเน้นการนำเครื่องมือหรือระบบสำเร็จรูปมาประยุกต์ใช้ในการบริหารจัดการ
+          </p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border border-slate-800/80">
+          <h4 class="font-bold text-white text-base mb-2 flex items-center gap-2">
+            <span class="text-cyan-400 code-font">Q:</span>
+            ระหว่างเรียน ต้องมีโน้ตบุ๊กสเปกแรงแค่ไหน?
+          </h4>
+          <p class="text-slate-300 text-sm leading-relaxed pl-6">
+            A: สำหรับปีแรก โน้ตบุ๊กทั่วไป (RAM 8GB - 16GB, CPU Core i5 / Ryzen 5 ขึ้นไป) ก็สามารถใช้เรียนเขียนโปรแกรมได้สบายมากครับ และที่ภาควิชามีห้องปฏิบัติการคอมพิวเตอร์ประสิทธิภาพสูงสำหรับใช้ในการเรียนการสอนตลอดหลักสูตร
+          </p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border border-slate-800/80">
+          <h4 class="font-bold text-white text-base mb-2 flex items-center gap-2">
+            <span class="text-cyan-400 code-font">Q:</span>
+            มีโอกาสได้งานทำก่อนเรียนจบจริงไหม?
+          </h4>
+          <p class="text-slate-300 text-sm leading-relaxed pl-6">
+            A: จริงครับ เพราะในปีที่ 4 นักศึกษาจะได้ออก “สหกิจศึกษา” ในสถานประกอบการจริง ซึ่งบริษัทส่วนใหญ่มักจะเสนอรับเข้าทำงานทันทีหลังฝึกงานเสร็จ หากนักศึกษามีผลงานและความตั้งใจที่ดี
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= CONTACT / 2 CHANNELS & INTEREST FORM ================= -->
+  <section id="contact" class="py-20 gradient-bg border-t border-slate-800 relative">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <div class="text-center space-y-3 mb-14">
+        <span class="text-xs font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-800/60 px-3.5 py-1 rounded-full">
+          Get in Touch & Follow Us
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">ช่องทางการติดต่อสื่อสารสาขาวิชา</h2>
+        <p class="text-slate-300 text-sm max-w-xl mx-auto">
+          มีข้อสงสัยเกี่ยวกับหลักสูตร การสมัครเรียน หรือการเทียบโอน สามารถติดต่อคณาจารย์และรุ่นพี่ได้โดยตรงผ่าน 2 ช่องทางหลัก
+        </p>
+      </div>
+
+      <!-- 2 Official Contact Channels Cards -->
+      <div class="grid md:grid-cols-2 gap-6 mb-12">
+        
+        <!-- Channel 1: Facebook -->
+        <a href="https://www.facebook.com/ComSciBPRMUTTO/" target="_blank" rel="noopener noreferrer" class="glass-card glass-card-hover p-8 rounded-3xl border border-blue-500/30 flex flex-col justify-between group">
+          <div class="flex items-start gap-4">
+            <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-blue-500/30 text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all">
+              <i data-lucide="facebook" class="w-7 h-7"></i>
+            </div>
+            <div>
+              <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider block">Official Facebook Fanpage</span>
+              <h3 class="text-xl font-bold text-white mt-1 group-hover:text-cyan-300 transition-colors">ComSci RMUTTO บางพระ</h3>
+              <p class="text-slate-400 text-xs sm:text-sm mt-1 leading-relaxed">
+                ติดตามข่าวสารการรับสมัคร กิจกรรม ผลงานนักศึกษา และ Inbox พูดคุยกับพี่ ๆ ได้ตลอดเวลา
+              </p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-blue-400 font-semibold">
+            <span>fb.com/ComSciBPRMUTTO</span>
+            <span class="inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              <span>ไปยังแฟนเพจ</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </span>
+          </div>
+        </a>
+
+        <!-- Channel 2: Email -->
+        <a href="mailto:comsci_bp@rmutto.ac.th" class="glass-card glass-card-hover p-8 rounded-3xl border border-cyan-500/30 flex flex-col justify-between group">
+          <div class="flex items-start gap-4">
+            <div class="w-14 h-14 rounded-2xl bg-cyan-600/20 border border-cyan-500/30 text-cyan-400 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-cyan-500 group-hover:text-slate-950 transition-all">
+              <i data-lucide="mail" class="w-7 h-7"></i>
+            </div>
+            <div>
+              <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider block">Official Department E-mail</span>
+              <h3 class="text-xl font-bold text-white mt-1 group-hover:text-cyan-300 transition-colors">comsci_bp@rmutto.ac.th</h3>
+              <p class="text-slate-400 text-xs sm:text-sm mt-1 leading-relaxed">
+                ติดต่อสอบถามข้อมูลทางวิชาการ การเทียบโอนหน่วยกิต หรือประสานงานเอกสารทางการศึกษา
+              </p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-cyan-400 font-semibold">
+            <span>ส่งอีเมลถึงสาขาวิชา</span>
+            <span class="inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              <span>เขียนอีเมล</span>
+              <i data-lucide="send" class="w-4 h-4"></i>
+            </span>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Official Contact Info Summary Banner -->
+      <div class="mt-8 p-6 sm:p-8 rounded-3xl bg-slate-900/80 border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="space-y-1.5 text-center md:text-left">
+          <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider block">สถานที่จัดการเรียนการสอน & ติดต่อประสานงาน</span>
+          <h4 class="text-lg font-bold text-white">สาขาวิชาวิทยาการคอมพิวเตอร์ คณะวิทยาศาสตร์และเทคโนโลยี</h4>
+          <p class="text-xs text-slate-400">
+            มหาวิทยาลัยเทคโนโลยีราชมงคลตะวันออก (เขตพื้นที่บางพระ) 43 หมู่ 6 ต.บางพระ อ.ศรีราชา จ.ชลบุรี 20110
+          </p>
+        </div>
+        <div class="flex flex-wrap items-center justify-center gap-3 shrink-0">
+          <a href="https://academic.rmutto.ac.th/?page_id=706" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-400 to-blue-600 hover:from-cyan-300 hover:to-blue-500 text-slate-950 font-bold px-5 py-3 rounded-xl shadow-lg shadow-cyan-500/20 text-xs sm:text-sm transition">
+            <span>เข้าสู่ระบบรับสมัครออนไลน์</span>
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+          </a>
+          <a href="https://www.facebook.com/ComSciBPRMUTTO/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold px-5 py-3 rounded-xl text-xs sm:text-sm transition">
+            <i data-lucide="facebook" class="w-4 h-4"></i>
+            <span>ทักแชท Facebook</span>
+          </a>
+          <a href="mailto:comsci_bp@rmutto.ac.th" class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700 font-bold px-5 py-3 rounded-xl text-xs sm:text-sm transition">
+            <i data-lucide="mail" class="w-4 h-4"></i>
+            <span>ส่งอีเมล</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-[#040810] text-slate-400 py-12 border-t border-slate-800 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-12 gap-8 mb-8">
+        
+        <div class="md:col-span-5 space-y-3">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-cyan-500 flex items-center justify-center text-slate-950 font-bold">
+              <i data-lucide="terminal" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <span class="text-base font-bold text-white">สาขาวิชาวิทยาการคอมพิวเตอร์</span>
+              <p class="text-xs text-slate-400">คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยเทคโนโลยีราชมงคลตะวันออก</p>
+            </div>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed max-w-md">
+            หลักสูตรวิทยาศาสตรบัณฑิต (วท.บ. วิทยาการคอมพิวเตอร์) หลักสูตรปรับปรุง พ.ศ. 2569 มุ่งสร้างบัณฑิตนักปฏิบัติ เชี่ยวชาญเทคโนโลยี ตอบโจทย์อุตสาหกรรมดิจิทัลแห่งอนาคต
+          </p>
+        </div>
+
+        <div class="md:col-span-3 space-y-2">
+          <h4 class="font-bold text-white text-sm">ลิงก์สำคัญ</h4>
+          <ul class="text-xs space-y-2 text-slate-400">
+            <li>
+              <a href="https://academic.rmutto.ac.th/?page_id=706" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline flex items-center gap-1 font-semibold">
+                <span>สมัครเข้าศึกษาออนไลน์ (สวท.)</span>
+                <i data-lucide="external-link" class="w-3 h-3"></i>
+              </a>
+            </li>
+            <li><a href="#about" class="hover:text-cyan-400 transition">ข้อมูลทั่วไป</a></li>
+            <li><a href="#curriculum" class="hover:text-cyan-400 transition">แผนการเรียน 4 ปี</a></li>
+            <li><a href="#plos" class="hover:text-cyan-400 transition">ผลลัพธ์การเรียนรู้ (PLOs)</a></li>
+            <li><a href="#careers" class="hover:text-cyan-400 transition">อาชีพที่รองรับ</a></li>
+            <li><a href="#calendar" class="hover:text-cyan-400 transition">ปฏิทินรับสมัคร TCAS</a></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-4 space-y-2.5">
+          <h4 class="font-bold text-white text-sm">ช่องทางการติดต่อสื่อสาร 2 ช่องทาง</h4>
+          <p class="text-xs text-slate-400">เขตพื้นที่บางพระ ต.บางพระ อ.ศรีราชา จ.ชลบุรี 20110</p>
+          <div class="space-y-2 text-xs pt-1">
+            <a href="mailto:comsci_bp@rmutto.ac.th" class="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition">
+              <i data-lucide="mail" class="w-4 h-4 shrink-0"></i>
+              <span><strong>E-mail:</strong> comsci_bp@rmutto.ac.th</span>
+            </a>
+            <a href="https://www.facebook.com/ComSciBPRMUTTO/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition">
+              <i data-lucide="facebook" class="w-4 h-4 shrink-0"></i>
+              <span><strong>Facebook:</strong> ComSciBPRMUTTO</span>
+            </a>
+            <a href="https://academic.rmutto.ac.th/?page_id=706" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition pt-1">
+              <i data-lucide="globe" class="w-4 h-4 shrink-0"></i>
+              <span><strong>เว็บไซต์สมัครเรียน:</strong> academic.rmutto.ac.th</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <p>&copy; 2026 สาขาวิชาวิทยาการคอมพิวเตอร์ มทร.ตะวันออก เขตพื้นที่บางพระ. All rights reserved.</p>
+        <p class="code-font text-slate-400">Bachelor of Science Program in Computer Science (B.S.)</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= JAVASCRIPT ================= -->
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Mobile Menu Toggle
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // 4-Year Curriculum Switcher Tabs
+    function switchYear(yearNumber) {
+      for (let i = 1; i <= 4; i++) {
+        const pane = document.getElementById(`year-${i}-content`);
+        const btn = document.getElementById(`tab-btn-${i}`);
+        if (pane) pane.classList.add('hidden');
+        if (btn) {
+          btn.className = "tab-btn px-5 py-3 rounded-xl font-bold text-sm sm:text-base transition-all flex items-center gap-2 bg-slate-900 text-slate-400 hover:text-white border border-slate-800";
+        }
+      }
+
+      const targetPane = document.getElementById(`year-${yearNumber}-content`);
+      const targetBtn = document.getElementById(`tab-btn-${yearNumber}`);
+      if (targetPane) targetPane.classList.remove('hidden');
+      if (targetBtn) {
+        targetBtn.className = "tab-btn active px-5 py-3 rounded-xl font-bold text-sm sm:text-base transition-all flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 shadow-lg shadow-cyan-500/25";
+      }
+
+      lucide.createIcons();
+    }
+
+    // ================= CALENDAR TABS CONTROLLER (YEAR 2570 ONLY) =================
+    let currentCalQual = 'm6';
+
+    const calDescriptions = {
+      'm6': 'ปฏิทินรับสมัคร ปีการศึกษา 2570 สำหรับผู้สำเร็จการศึกษาวุฒิ ม.6 (TCAS 70)',
+      'voc': 'ปฏิทินรับสมัคร ปีการศึกษา 2570 สำหรับผู้สำเร็จการศึกษาวุฒิ ปวช. และ ปวส. (เทียบโอน)'
+    };
+
+    function updateCalendarView() {
+      const paneM6 = document.getElementById('cal-table-2570-m6');
+      const paneVoc = document.getElementById('cal-table-2570-voc');
+      const btnM6 = document.getElementById('btn-qual-m6');
+      const btnVoc = document.getElementById('btn-qual-voc');
+      const badgeText = document.getElementById('cal-badge-text');
+
+      if (currentCalQual === 'm6') {
+        if (paneM6) paneM6.classList.remove('hidden');
+        if (paneVoc) paneVoc.classList.add('hidden');
+        if (btnM6) btnM6.className = "cal-qual-btn py-3.5 px-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-lg shadow-purple-500/25 transition-all";
+        if (btnVoc) btnVoc.className = "cal-qual-btn py-3.5 px-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 bg-slate-800/80 text-slate-400 hover:text-white border border-slate-700/60 transition-all";
+      } else {
+        if (paneM6) paneM6.classList.add('hidden');
+        if (paneVoc) paneVoc.classList.remove('hidden');
+        if (btnVoc) btnVoc.className = "cal-qual-btn py-3.5 px-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 shadow-lg shadow-cyan-500/25 transition-all";
+        if (btnM6) btnM6.className = "cal-qual-btn py-3.5 px-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 bg-slate-800/80 text-slate-400 hover:text-white border border-slate-700/60 transition-all";
+      }
+
+      if (badgeText && calDescriptions[currentCalQual]) {
+        badgeText.textContent = `กำลังแสดง: ${calDescriptions[currentCalQual]}`;
+      }
+
+      lucide.createIcons();
+    }
+
+    function setCalQual(qual) {
+      currentCalQual = qual;
+      updateCalendarView();
+    }
+
+    // ================= PLO TABS CONTROLLER =================
+    function switchPloTab(num) {
+      for (let i = 1; i <= 5; i++) {
+        const pane = document.getElementById(`plo-${i}-content`);
+        const btn = document.getElementById(`plo-tab-btn-${i}`);
+        if (pane) pane.classList.add('hidden');
+        if (btn) {
+          btn.className = "plo-tab-btn px-4 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-1.5 bg-slate-900 text-slate-400 hover:text-white border border-slate-800";
+        }
+      }
+      const targetPane = document.getElementById(`plo-${num}-content`);
+      const targetBtn = document.getElementById(`plo-tab-btn-${num}`);
+      if (targetPane) targetPane.classList.remove('hidden');
+      if (targetBtn) {
+        targetBtn.className = "plo-tab-btn active px-4 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-1.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 shadow-lg shadow-cyan-500/25";
+      }
+      const container = document.getElementById('plo-matrix-container');
+      if (container) {
+        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>
